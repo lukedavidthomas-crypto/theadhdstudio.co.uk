@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The ADHD Studio — Apps Built for the ADHD Brain</title>
+  <meta name="description" content="The ADHD Studio builds apps for the ADHD brain. Download ADH Do It — the ADHD planner with Focus Timer, Brain Dump AI, XP rewards and more. Beat time blindness. Get things done." />
+  <meta name="keywords" content="ADHD planner, ADHD app, focus timer, brain dump, time blindness, task manager for ADHD, neurodivergent app, ADHD productivity, ADH Do It" />
+  <meta property="og:title" content="The ADHD Studio — Apps Built for the ADHD Brain" />
+  <meta property="og:description" content="Stop fighting your brain. Start working with it. Download ADH Do It — Quick Wins, Brain Dump AI, Focus Zone & Weekly Wrapped." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://theadhdstudio.co.uk" />
+  <meta property="og:image" content="https://theadhdstudio.co.uk/og-image.png" />
+  <link rel="canonical" href="https://theadhdstudio.co.uk" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        #0D0F1A;
+      --bg-card:   #161827;
+      --bg-input:  #1C1F30;
+      --orange:    #E8845A;
+      --orange-dk: #7A3A1E;
+      --purple:    #7B6FD4;
+      --purple-dk: #2E2A5C;
+      --focus:     #8B7FE8;
+      --glow:      #B8AAFF;
+      --gold:      #FFCC00;
+      --text:      #FFFFFF;
+      --sec:       #8B8FA8;
+      --muted:     #4A4E63;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Outfit', sans-serif; line-height: 1.6; overflow-x: hidden; }
+
+    /* Cosmic background */
+    #cosmos { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+
+    /* Deep nebula glow layers */
+    #cosmos::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% 20%, rgba(123,111,212,.07) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 70%, rgba(232,132,90,.05) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 50% 50%, rgba(139,127,232,.04) 0%, transparent 70%);
+    }
+
+    /* Stars */
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: #fff;
+    }
+    .star.twinkle-slow  { animation: twinkle var(--d, 4s) ease-in-out infinite var(--delay, 0s); }
+    .star.twinkle-med   { animation: twinkle var(--d, 2.5s) ease-in-out infinite var(--delay, 0s); }
+    .star.twinkle-fast  { animation: twinkle var(--d, 1.5s) ease-in-out infinite var(--delay, 0s); }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: var(--min-op, 0.15); transform: scale(1); }
+      50%       { opacity: var(--max-op, 0.9);  transform: scale(var(--scale, 1.3)); }
+    }
+
+    /* Occasional shooting star */
+    .shoot {
+      position: absolute;
+      width: 120px; height: 1px;
+      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.7), rgba(255,255,255,0));
+      animation: shoot var(--dur, 6s) linear infinite var(--delay, 2s);
+      opacity: 0;
+      transform-origin: left center;
+    }
+    @keyframes shoot {
+      0%   { opacity: 0; transform: translateX(0) rotate(var(--angle, -20deg)); }
+      2%   { opacity: 1; }
+      8%   { opacity: 0; transform: translateX(180px) rotate(var(--angle, -20deg)); }
+      100% { opacity: 0; transform: translateX(180px) rotate(var(--angle, -20deg)); }
+    }
+
+    /* Nav */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 48px; display: flex; align-items: center; justify-content: space-between; background: rgba(13,15,26,.88); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(123,111,212,.1); }
+    .logo { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700; color: var(--text); text-decoration: none; }
+    .logo-icon { width: 30px; height: 30px; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .logo-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .nav-links a { color: var(--sec); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-pill { background: linear-gradient(135deg,var(--purple),var(--focus)); color: var(--text) !important; padding: 9px 20px; border-radius: 30px; font-weight: 600 !important; font-size: 13px !important; box-shadow: 0 4px 18px rgba(123,111,212,.4); }
+
+    /* Hamburger */
+    .nav-burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .nav-burger span { display: block; width: 22px; height: 2px; background: var(--sec); border-radius: 2px; transition: transform .25s, opacity .25s; }
+    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile nav drawer */
+    .nav-mobile { display: none; position: fixed; top: 57px; left: 0; right: 0; background: rgba(13,15,26,.97); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(123,111,212,.12); z-index: 99; padding: 20px 24px 28px; flex-direction: column; gap: 4px; }
+    .nav-mobile.open { display: flex; animation: nav-drop .2s ease; }
+    @keyframes nav-drop { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+    .nav-mobile a { color: var(--sec); text-decoration: none; font-size: 15px; font-weight: 500; padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,.05); transition: color .2s; }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile a:hover { color: var(--text); }
+    .nav-mobile .nav-pill { margin-top: 10px; text-align: center; border-bottom: none; padding: 12px 20px; }
+
+    /* Layout helpers */
+    section { position: relative; z-index: 1; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
+    .sec-label { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; color: var(--sec); margin-bottom: 14px; }
+    .sec-label::before { content: ''; width: 18px; height: 2px; background: linear-gradient(90deg,var(--purple),var(--orange)); }
+    h2.sec-title { font-size: clamp(28px,4vw,46px); font-weight: 800; line-height: 1.15; margin-bottom: 14px; }
+    .sec-sub { font-size: 16px; color: var(--sec); line-height: 1.75; max-width: 540px; }
+    .center { text-align: center; }
+    .sec-sub.center { margin: 0 auto; }
+    .grad-o { background: linear-gradient(135deg,var(--orange),var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .grad-p { background: linear-gradient(135deg,var(--purple),var(--glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* Buttons */
+    .btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-family: 'Outfit', sans-serif; font-weight: 700; border-radius: 30px; transition: transform .15s, box-shadow .15s; cursor: pointer; border: none; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-orange { background: linear-gradient(135deg,var(--orange),#c8602a); color: #fff; padding: 14px 30px; font-size: 16px; box-shadow: 0 8px 28px rgba(232,132,90,.4); }
+    .btn-orange:hover { box-shadow: 0 12px 36px rgba(232,132,90,.5); }
+    .btn-ghost { background: rgba(123,111,212,.12); border: 1px solid rgba(123,111,212,.35); color: var(--glow); padding: 14px 28px; font-size: 15px; }
+    .btn-ghost:hover { background: rgba(123,111,212,.22); }
+
+    /* Native store badges */
+    .badge-wrap { display: flex; gap: 12px; flex-wrap: wrap; }
+    .badge-apple, .badge-gplay {
+      display: inline-flex; align-items: center; gap: 11px;
+      background: #000; border-radius: 11px;
+      padding: 10px 18px; text-decoration: none; color: #fff;
+      min-width: 152px; border: 1px solid rgba(255,255,255,.13);
+      transition: transform .15s, box-shadow .15s;
+      font-family: 'Outfit', sans-serif;
+    }
+    .badge-apple:hover, .badge-gplay:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.5); }
+    .badge-icon { flex-shrink: 0; display: flex; align-items: center; }
+    .badge-label { font-size: 9.5px; font-weight: 400; opacity: .75; display: block; line-height: 1.2; letter-spacing: .2px; }
+    .badge-name  { font-size: 17px; font-weight: 700; display: block; line-height: 1.2; letter-spacing: -.3px; }
+    .badge-soon {
+      display: inline-flex; align-items: center; gap: 11px;
+      background: rgba(255,255,255,.04); border-radius: 11px;
+      padding: 10px 18px; color: var(--muted);
+      min-width: 152px; border: 1px solid rgba(255,255,255,.07);
+      font-family: 'Outfit', sans-serif; cursor: default;
+      position: relative;
+    }
+    .badge-soon .badge-name { color: var(--muted); font-size: 15px; font-weight: 700; display: block; line-height: 1.2; }
+    .badge-soon .badge-label { font-size: 9px; color: var(--muted); display: block; }
+    .soon-chip {
+      position: absolute; top: -8px; right: -8px;
+      background: var(--purple); color: #fff;
+      font-size: 8px; font-weight: 700; padding: 2px 7px;
+      border-radius: 20px; letter-spacing: .5px; text-transform: uppercase;
+    }
+
+    /* ── HERO ── */
+    #hero { min-height: 100vh; display: flex; align-items: center; padding: 120px 0 80px; }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 7px; background: rgba(123,111,212,.12); border: 1px solid rgba(123,111,212,.28); padding: 6px 14px; border-radius: 30px; font-size: 12px; font-weight: 600; color: var(--glow); margin-bottom: 22px; letter-spacing: .3px; }
+    h1.hero-title { font-size: clamp(38px,5vw,62px); font-weight: 800; line-height: 1.08; margin-bottom: 20px; }
+    .hero-sub { font-size: 17px; color: var(--sec); line-height: 1.75; margin-bottom: 36px; }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; }
+    .hero-badges { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* Hero screenshot */
+    .hero-visual { display: flex; justify-content: center; }
+    .hero-img-wrap { position: relative; animation: bob 5s ease-in-out infinite; transform: rotate(6deg); }
+    @keyframes bob { 0%,100% { transform: rotate(6deg) translateY(0); } 50% { transform: rotate(6deg) translateY(-14px); } }
+    .hero-glow { position: absolute; inset: -50px; background: radial-gradient(ellipse, rgba(123,111,212,.18) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+    .hero-img { height: 600px; width: auto; filter: drop-shadow(0 40px 80px rgba(0,0,0,.75)); border-radius: 40px; }
+    @media (max-width: 768px) {
+      .hero-img-wrap { transform: rotate(0deg) !important; animation: bob-mobile 5s ease-in-out infinite; }
+      @keyframes bob-mobile { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+      .hero-img { height: 420px; }
+    }
+
+    /* ── TRUST BAR ── */
+    #trust { padding: 28px 0; border-top: 1px solid rgba(255,255,255,.04); border-bottom: 1px solid rgba(255,255,255,.04); }
+    .trust-row { display: flex; align-items: center; justify-content: center; gap: 44px; flex-wrap: wrap; }
+    .trust-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--sec); }
+
+    /* ── SCREENSHOT STRIP ── */
+    #strip { padding: 70px 0; }
+    #counta-strip { padding: 40px 0 70px; }
+    .strip-title { text-align: center; margin-bottom: 36px; }
+    .strip-outer { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: rgba(123,111,212,.3) transparent; }
+    .strip-outer::-webkit-scrollbar { height: 4px; }
+    .strip-outer::-webkit-scrollbar-track { background: transparent; }
+    .strip-outer::-webkit-scrollbar-thumb { background: rgba(123,111,212,.3); border-radius: 4px; }
+    .strip-scroll { display: flex; gap: 20px; padding: 12px 40px 24px; width: max-content; margin: 0 auto; }
+    .strip-img { height: 380px; width: auto; border-radius: 28px; flex-shrink: 0; filter: drop-shadow(0 20px 40px rgba(0,0,0,.6)); transition: transform .25s, filter .25s; cursor: zoom-in; display: block; }
+    .strip-img:hover { transform: scale(1.05) translateY(-6px); filter: drop-shadow(0 28px 50px rgba(0,0,0,.7)) brightness(1.05); }
+    .strip-img.counta { border-radius: 24px; }
+
+    /* Lightbox */
+    #lightbox { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(5,6,14,.92); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); align-items: center; justify-content: center; cursor: zoom-out; }
+    #lightbox.open { display: flex; animation: lb-in .22s ease; }
+    @keyframes lb-in { from { opacity: 0; } to { opacity: 1; } }
+    #lightbox img { max-height: 88vh; max-width: 88vw; width: auto; border-radius: 28px; box-shadow: 0 40px 100px rgba(0,0,0,.8); animation: lb-scale .25s cubic-bezier(.34,1.56,.64,1); cursor: default; }
+    @keyframes lb-scale { from { transform: scale(.88); } to { transform: scale(1); } }
+    #lb-close { position: fixed; top: 24px; right: 28px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); color: #fff; font-size: 20px; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .15s; line-height: 1; }
+    #lb-close:hover { background: rgba(255,255,255,.18); }
+    #lb-close:focus-visible { outline: 2px solid #B8AAFF; outline-offset: 3px; }
+    .strip-img:focus-visible { outline: 2px solid #B8AAFF; outline-offset: 4px; border-radius: 28px; }
+
+    /* ── FEATURES ── */
+    #features { padding: 90px 0; }
+    .features-hdr { text-align: center; margin-bottom: 56px; }
+    .feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .feat-card { background: var(--bg-card); border-radius: 20px; padding: 30px; border: 1px solid rgba(255,255,255,.05); position: relative; overflow: hidden; transition: border-color .2s, transform .2s; }
+    .feat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent, linear-gradient(90deg,var(--purple),var(--focus))); }
+    .feat-card:hover { border-color: rgba(123,111,212,.3); transform: translateY(-4px); }
+    .feat-icon { width: 48px; height: 48px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 18px; }
+    .feat-title { font-size: 17px; font-weight: 700; margin-bottom: 9px; }
+    .feat-desc { font-size: 13px; color: var(--sec); line-height: 1.7; }
+    .feat-tag { display: inline-block; margin-top: 14px; font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 20px; background: rgba(123,111,212,.12); color: var(--glow); }
+
+    /* ── SHOWCASE ROWS ── */
+    #showcase { padding: 90px 0; }
+    .show-row { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; margin-bottom: 100px; }
+    .show-row:last-child { margin-bottom: 0; }
+    .show-row.flip { direction: rtl; }
+    .show-row.flip > * { direction: ltr; }
+    .show-img-wrap { display: flex; justify-content: center; }
+    .show-img { height: 460px; width: auto; filter: drop-shadow(0 30px 50px rgba(0,0,0,.65)); border-radius: 34px; }
+    .show-list { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 11px; }
+    .show-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--sec); line-height: 1.6; }
+    .chk { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 1px; }
+    .chk-p { background: rgba(123,111,212,.2); color: var(--glow); }
+    .chk-o { background: rgba(232,132,90,.2); color: var(--orange); }
+
+    /* ── DOWNLOAD ── */
+    #download { padding: 90px 0; background: radial-gradient(ellipse at 50% 0%, rgba(123,111,212,.1) 0%, transparent 65%); border-top: 1px solid rgba(123,111,212,.08); }
+    .dl-inner { text-align: center; max-width: 580px; margin: 0 auto; }
+    .dl-badges { display: flex; gap: 14px; justify-content: center; margin-top: 36px; flex-wrap: wrap; }
+    .stars { color: var(--gold); letter-spacing: 2px; }
+
+    /* ── COUNTA ── */
+    #counta { padding: 90px 0; }
+    .counta-card { background: var(--bg-card); border-radius: 28px; padding: 60px; border: 1px solid rgba(232,132,90,.1); display: grid; grid-template-columns: 1fr auto; gap: 60px; align-items: center; position: relative; overflow: hidden; }
+    .counta-card::after { content: ''; position: absolute; right: -80px; top: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(232,132,90,.07) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+    .counta-eyebrow { display: inline-flex; align-items: center; gap: 6px; background: rgba(232,132,90,.1); border: 1px solid rgba(232,132,90,.25); padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; color: var(--orange); margin-bottom: 14px; }
+    .counta-title { font-size: 38px; font-weight: 800; margin-bottom: 12px; }
+    .counta-desc { font-size: 15px; color: var(--sec); line-height: 1.75; max-width: 460px; }
+    .counta-badges { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+    .counta-visual { flex-shrink: 0; }
+    .counta-img { height: 300px; width: auto; filter: drop-shadow(0 20px 40px rgba(0,0,0,.5)); border-radius: 28px; }
+
+    /* ── CUSTOM ── */
+    #custom { padding: 90px 0; }
+    .cust-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 44px; margin-bottom: 44px; }
+    .cust-card { background: var(--bg-card); border-radius: 18px; padding: 28px 22px; border: 1px solid rgba(255,255,255,.05); transition: border-color .2s, transform .2s; }
+    .cust-card:hover { border-color: rgba(123,111,212,.3); transform: translateY(-4px); }
+    .cust-icon { font-size: 30px; margin-bottom: 14px; }
+    .cust-title { font-size: 16px; font-weight: 700; margin-bottom: 7px; }
+    .cust-desc { font-size: 13px; color: var(--sec); line-height: 1.65; }
+
+    /* ── YOUTUBE ── */
+    #youtube { padding: 70px 0; border-top: 1px solid rgba(255,255,255,.04); }
+    .yt-inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+    .yt-chip { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,0,0,.1); border: 1px solid rgba(255,0,0,.2); padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; color: #FF4444; margin-bottom: 18px; }
+
+    /* ── SEO LINKS ── */
+    #seo-links { padding: 70px 0; border-top: 1px solid rgba(255,255,255,.04); }
+    .seo-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; margin-top: 36px; }
+    .seo-card { background: var(--bg-card); border-radius: 16px; padding: 24px; border: 1px solid rgba(255,255,255,.05); text-decoration: none; color: var(--text); transition: border-color .2s, transform .2s; display: block; }
+    .seo-card:hover { border-color: rgba(123,111,212,.3); transform: translateY(-3px); }
+    .seo-card-label { font-size: 10px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--glow); margin-bottom: 8px; }
+    .seo-card-title { font-size: 16px; font-weight: 700; margin-bottom: 7px; }
+    .seo-card-desc { font-size: 12px; color: var(--sec); line-height: 1.6; }
+    .seo-card-arrow { margin-top: 14px; font-size: 12px; color: var(--purple); font-weight: 600; }
+
+    /* ── FOOTER ── */
+    footer { padding: 44px 0 28px; border-top: 1px solid rgba(255,255,255,.05); }
+    .foot-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+    .foot-logo { font-size: 15px; font-weight: 700; color: var(--sec); }
+    .foot-links { display: flex; gap: 24px; list-style: none; }
+    .foot-links a { color: var(--muted); text-decoration: none; font-size: 12px; transition: color .2s; }
+    .foot-links a:hover { color: var(--sec); }
+    .foot-credit { font-size: 11px; color: var(--muted); text-align: right; }
+    .foot-credit a { color: var(--purple); text-decoration: none; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      nav { padding: 14px 22px; }
+      .nav-links { display: none; }
+      .nav-burger { display: flex; }
+      .wrap { padding: 0 22px; }
+      .hero-grid, .show-row, .counta-card { grid-template-columns: 1fr; text-align: center; gap: 36px; }
+      .show-row.flip { direction: ltr; }
+      .show-img-wrap, .hero-visual, .counta-visual { order: -1; justify-content: center; align-items: center; }
+      .hero-ctas, .hero-badges, .counta-badges { justify-content: center; }
+      .feat-grid, .cust-grid, .seo-grid { grid-template-columns: 1fr; }
+      .yt-inner { flex-direction: column; text-align: center; }
+      .foot-inner { flex-direction: column; align-items: center; }
+      .foot-credit { text-align: center; }
+      .sec-sub { max-width: 100%; }
+      .show-list li { text-align: left; }
+    }
+
+    /* ── REDUCED MOTION ── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      /* Keep stars visible but static */
+      .star { opacity: .25 !important; }
+      /* Disable floating phone bob */
+      .hero-img-wrap { animation: none !important; }
+      /* Disable lightbox scale animation */
+      #lightbox img { animation: none !important; }
+      /* Disable strip hover lift */
+      .strip-img:hover { transform: none; }
+      /* Disable card hover lifts */
+      .feat-card:hover, .cust-card:hover, .seo-card:hover { transform: none; }
+    }
+  </style>
+
+  <!-- Structured data: Organisation -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "The ADHD Studio",
+    "url": "https://theadhdstudio.co.uk",
+    "logo": "https://theadhdstudio.co.uk/favicon.png",
+    "description": "The ADHD Studio builds apps for the ADHD brain. Based in the UK, our apps are used worldwide by people with ADHD looking for focus tools, task managers and productivity support.",
+    "email": "hello@timtomstudio.co.uk",
+    "areaServed": ["GB", "US", "CA", "AU", "NZ"],
+    "sameAs": [
+      "https://apps.apple.com/gb/app/adh-do-it/id6746840791",
+      "https://apps.apple.com/gb/app/counta-countdown-save/id6770090810"
+    ]
+  }
+  </script>
+
+  <!-- Structured data: ADH Do It app -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "ADH Do It",
+    "operatingSystem": "iOS, Android",
+    "applicationCategory": "HealthApplication",
+    "description": "ADH Do It is an ADHD planner app with a Focus Timer, Brain Dump AI, XP rewards, Quick Wins, Quests and Weekly Wrapped. Designed for people with ADHD to beat time blindness and actually get things done.",
+    "url": "https://theadhdstudio.co.uk",
+    "downloadUrl": "https://apps.apple.com/gb/app/adh-do-it/id6746840791",
+    "screenshot": "https://theadhdstudio.co.uk/screenshots/adh/1_home.png",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "GBP"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "The ADHD Studio"
+    },
+    "keywords": "ADHD planner, ADHD app, focus timer, brain dump, time blindness app, task manager for ADHD, ADHD productivity, neurodivergent app"
+  }
+  </script>
+
+  <!-- Structured data: Counta app -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Counta — Countdown & Save",
+    "operatingSystem": "iOS, Android",
+    "applicationCategory": "FinanceApplication",
+    "description": "Counta helps you count down to the moments that matter and build a savings plan to get there. Set a goal, choose weekly or monthly saving, and watch your pot fill up. Designed for ADHD brains that struggle with budgeting and impulse spending.",
+    "url": "https://theadhdstudio.co.uk/#counta",
+    "downloadUrl": "https://apps.apple.com/gb/app/counta-countdown-save/id6770090810",
+    "screenshot": "https://theadhdstudio.co.uk/screenshots/counta/1_mockup.png",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "GBP"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "The ADHD Studio"
+    },
+    "keywords": "ADHD budgeting app, savings app, countdown app, ADHD money, impulse spending, goal saving, ADHD finance"
+  }
+  </script>
+
+  <!-- Cookie banner -->
+  <style>
+    #cookie-banner {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      z-index: 9999; width: min(560px, calc(100vw - 32px));
+      background: #161827; border: 1px solid rgba(123,111,212,.25);
+      border-radius: 18px; padding: 20px 24px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.6);
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      font-family: 'Outfit', sans-serif;
+      animation: cb-in .3s ease;
+    }
+    @keyframes cb-in { from { opacity:0; transform:translateX(-50%) translateY(16px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+    #cookie-banner.hide { animation: cb-out .25s ease forwards; }
+    @keyframes cb-out { to { opacity:0; transform:translateX(-50%) translateY(16px); } }
+    #cookie-banner p { font-size: 13px; color: #8B8FA8; line-height: 1.55; flex: 1; min-width: 200px; margin: 0; }
+    #cookie-banner a { color: #B8AAFF; text-decoration: none; }
+    #cookie-banner a:hover { text-decoration: underline; }
+    .cb-btns { display: flex; gap: 10px; flex-shrink: 0; }
+    .cb-accept { background: linear-gradient(135deg,#7B6FD4,#8B7FE8); color: #fff; border: none; border-radius: 30px; padding: 9px 18px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif; transition: transform .15s; }
+    .cb-accept:hover { transform: translateY(-1px); }
+    .cb-decline { background: transparent; color: #8B8FA8; border: 1px solid rgba(255,255,255,.1); border-radius: 30px; padding: 9px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Outfit', sans-serif; transition: border-color .15s, color .15s; }
+    .cb-decline:hover { border-color: rgba(255,255,255,.25); color: #fff; }
+    @media (max-width: 480px) { #cookie-banner { bottom: 16px; padding: 16px; } .cb-btns { width: 100%; } .cb-accept, .cb-decline { flex: 1; text-align: center; } }
+  </style>
+</head>
+<body>
+
+<!-- Cookie consent banner -->
+<div id="cookie-banner" role="dialog" aria-label="Cookie preferences" style="display:none">
+  <p>We use cookies to improve your experience. Analytics help us understand how people find us.
+     See our <a href="privacy.html">privacy policy</a>.</p>
+  <div class="cb-btns">
+    <button class="cb-decline" onclick="cookieChoice(false)">Essential only</button>
+    <button class="cb-accept" onclick="cookieChoice(true)">Accept analytics</button>
+  </div>
+</div>
+
+<div id="cosmos"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-icon"><img src="favicon.png" alt="ADH Do It" /></div>
+    The ADHD Studio
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">ADH Do It</a></li>
+    <li><a href="counta.html">Counta</a></li>
+    <li><a href="custom-adhd-apps.html">For Business</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="#download" class="nav-pill">Download Free</a></li>
+  </ul>
+  <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile" onclick="toggleMobileNav()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile nav drawer -->
+<div class="nav-mobile" id="nav-mobile">
+  <a href="#features" onclick="closeMobileNav()">ADH Do It</a>
+  <a href="#counta" onclick="closeMobileNav()">Counta</a>
+  <a href="custom-adhd-apps.html">For Business</a>
+  <a href="about.html">About</a>
+  <a href="mailto:hello@timtomstudio.co.uk">Contact</a>
+  <a href="#download" class="nav-pill" onclick="closeMobileNav()">Download Free</a>
+</div>
+
+<main id="main-content">
+<!-- HERO -->
+<section id="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">✦ Made by an ADHD team. For the ADHD brain.</div>
+        <h1 class="hero-title">Stop fighting your brain.<br/><span class="grad-p">Start working with it.</span></h1>
+        <p class="hero-sub">Apps built for the way the ADHD brain actually works — not how productivity gurus think it should. Beat time blindness. Kill your task backlog. Feel good about getting things done.</p>
+        <div class="hero-ctas">
+          <a href="#download" class="btn btn-orange">⚡ Download ADH Do It — Free</a>
+          <a href="#features" class="btn btn-ghost">See how it works →</a>
+        </div>
+        <div class="hero-badges badge-wrap">
+          <div class="badge-soon"><svg width="17" height="21" viewBox="0 0 17 21" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M14.29 11.08c-.02-2.27 1.86-3.37 1.94-3.42-1.06-1.55-2.71-1.76-3.3-1.78-1.4-.14-2.73.82-3.44.82-.72 0-1.83-.8-3.01-.78C4.9 5.95 3.46 6.9 2.69 8.36c-1.6 2.77-.41 6.87 1.15 9.12.77 1.1 1.67 2.33 2.87 2.28 1.15-.05 1.59-.74 2.98-.74 1.38 0 1.78.74 2.99.72 1.24-.02 2.02-1.11 2.77-2.22.88-1.27 1.24-2.51 1.26-2.57-.03-.01-2.41-.93-2.43-3.87zm-2.27-7.12C12.65 3.05 13.09 2 12.97.93c-.92.04-2.03.61-2.69 1.38-.59.68-1.1 1.77-.96 2.82 1.02.08 2.07-.52 2.7-1.17z"/></svg><div><span class="badge-label">Coming soon</span><span class="badge-name">App Store</span></div><span class="soon-chip">Soon</span></div>
+          <div class="badge-soon"><svg width="20" height="22" viewBox="0 0 20 22" xmlns="http://www.w3.org/2000/svg"><path d="M1.22.36C.83.56.56.99.56 1.56v18.89c0 .57.27 1 .66 1.19l.08.05 10.58-10.58v-.25L1.3.31l-.08.05z" fill="#4285F4"/><path d="M15.41 14.7l-3.53-3.53v-.25l3.53-3.53.08.05 4.18 2.38c1.19.68 1.19 1.78 0 2.45l-4.18 2.38-.08.05z" fill="#FBBC04"/><path d="M15.49 14.65L11.88 11 1.22 21.64c.39.42 1.04.47 1.77.05l12.5-7.04" fill="#34A853"/><path d="M15.49 7.35L2.99.31C2.26-.11 1.61-.06 1.22.36L11.88 11l3.61-3.65z" fill="#EA4335"/></svg><div><span class="badge-label">Coming soon</span><span class="badge-name">Google Play</span></div><span class="soon-chip">Soon</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-img-wrap">
+          <div class="hero-glow"></div>
+          <picture>
+          <source type="image/webp" srcset="screenshots/adh/1_home-660.webp 660w, screenshots/adh/1_home-990.webp 990w" sizes="(max-width: 768px) 90vw, 280px" />
+          <img class="hero-img" src="screenshots/adh/1_home.png" alt="ADH Do It app — main task screen showing progress ring, Quick Wins and Quests" width="660" height="1434" />
+        </picture>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<section id="trust">
+  <div class="wrap">
+    <div class="trust-row">
+      <div class="trust-item">🧠 Designed by ADHD brains</div>
+      <div class="trust-item">⚡ Zero guilt. Just progress.</div>
+      <div class="trust-item">🌙 Dark mode by default</div>
+      <div class="trust-item">🤖 AI-powered Brain Dump</div>
+      <div class="trust-item">🆓 Free to download</div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENSHOT STRIP -->
+<section id="strip">
+  <div class="wrap strip-title">
+    <div class="sec-label" style="justify-content:center">ADH Do It</div>
+    <h2 class="sec-title center">Every screen, <span class="grad-p">built for your brain</span></h2>
+  </div>
+  <div class="strip-outer">
+    <div class="strip-scroll">
+      <picture>
+          <source type="image/webp" srcset="screenshots/adh/1_home-660.webp 660w, screenshots/adh/1_home-990.webp 990w" sizes="(max-width: 768px) 50vw, 200px" />
+          <img class="strip-img" src="screenshots/adh/1_home.png" alt="ADH Do It ADHD planner app home screen — progress ring showing tasks completed, Quick Wins and Quests task list" loading="lazy" width="660" height="1434" />
+        </picture>
+      <picture>
+          <source type="image/webp" srcset="screenshots/adh/2_celebrate-660.webp 660w, screenshots/adh/2_celebrate-990.webp 990w" sizes="(max-width: 768px) 50vw, 200px" />
+          <img class="strip-img" src="screenshots/adh/2_celebrate.png" alt="ADH Do It ADHD app — confetti celebration screen rewarding task completion with XP points and positive feedback" loading="lazy" width="660" height="1434" />
+        </picture>
+      <picture>
+          <source type="image/webp" srcset="screenshots/adh/3_focus-660.webp 660w, screenshots/adh/3_focus-990.webp 990w" sizes="(max-width: 768px) 50vw, 200px" />
+          <img class="strip-img" src="screenshots/adh/3_focus.png" alt="ADH Do It Focus Zone — draggable circular timer helping people with ADHD stay on task and overcome time blindness" loading="lazy" width="660" height="1434" />
+        </picture>
+      <picture>
+          <source type="image/webp" srcset="screenshots/adh/4_braindump-660.webp 660w, screenshots/adh/4_braindump-990.webp 990w" sizes="(max-width: 768px) 50vw, 200px" />
+          <img class="strip-img" src="screenshots/adh/4_braindump.png" alt="ADH Do It Brain Dump screen — free-text input field for capturing ADHD thoughts, with AI sorting tasks automatically" loading="lazy" width="660" height="1434" />
+        </picture>
+      <picture>
+          <source type="image/webp" srcset="screenshots/adh/5_braindump_results-660.webp 660w, screenshots/adh/5_braindump_results-990.webp 990w" sizes="(max-width: 768px) 50vw, 200px" />
+          <img class="strip-img" src="screenshots/adh/5_braindump_results.png" alt="ADH Do It Brain Dump AI results — unstructured thoughts automatically sorted into Quick Win and Quest tasks for ADHD users" loading="lazy" width="660" height="1434" />
+        </picture>
+      <picture>
+          <source type="image/webp" srcset="screenshots/adh/6_wrapped-660.webp 660w, screenshots/adh/6_wrapped-990.webp 990w" sizes="(max-width: 768px) 50vw, 200px" />
+          <img class="strip-img" src="screenshots/adh/6_wrapped.png" alt="ADH Do It Weekly Wrapped screen — weekly summary showing tasks completed, focus time and ADHD productivity stats" loading="lazy" width="660" height="1434" />
+        </picture>
+      <picture>
+          <source type="image/webp" srcset="screenshots/adh/7_awards-660.webp 660w, screenshots/adh/7_awards-990.webp 990w" sizes="(max-width: 768px) 50vw, 200px" />
+          <img class="strip-img" src="screenshots/adh/7_awards.png" alt="ADH Do It Awards screen — shield badges and streaks celebrating ADHD productivity milestones and daily app use" loading="lazy" width="660" height="1434" />
+        </picture>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <div class="features-hdr">
+      <div class="sec-label" style="justify-content:center">What's inside</div>
+      <h2 class="sec-title center">Meet <span class="grad-p">ADH Do It</span></h2>
+      <p class="sec-sub center">The ADHD productivity app built around how your brain actually works. No endless lists. No guilt. Just the right task, at the right moment, with a dopamine hit every time you finish it.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card" style="--accent: linear-gradient(90deg,var(--orange),#c46030)">
+        <div class="feat-icon" style="background:rgba(122,58,30,.5)">⚡</div>
+        <div class="feat-title">Quick Wins &amp; Quests</div>
+        <div class="feat-desc">Not all tasks are equal. Quick Wins clear the clutter fast. Quests track your bigger goals. Always know what to tackle next — nothing gets lost.</div>
+        <div class="feat-tag" style="background:rgba(232,132,90,.12);color:var(--orange)">Zero decision fatigue</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(46,42,92,.7)">💭</div>
+        <div class="feat-title">Brain Dump → Clarity</div>
+        <div class="feat-desc">Type every swirling thought in one go. Do It's AI reads your chaos and turns it into organised, actionable tasks automatically. No sorting — just dump and go.</div>
+        <div class="feat-tag">Powered by AI</div>
+      </div>
+      <div class="feat-card" style="--accent: linear-gradient(90deg,var(--focus),var(--glow))">
+        <div class="feat-icon" style="background:rgba(46,42,92,.7)">⏱</div>
+        <div class="feat-title">Focus Zone</div>
+        <div class="feat-desc">Draggable timer dial with ambient soundscapes — White Noise, Cosmic, Dark. Enter deep work mode on your terms. Built for hyperfocus and time blindness alike.</div>
+        <div class="feat-tag" style="background:rgba(139,127,232,.12);color:var(--glow)">Beat time blindness</div>
+      </div>
+      <div class="feat-card" style="--accent: linear-gradient(90deg,var(--gold),var(--orange))">
+        <div class="feat-icon" style="background:rgba(90,70,0,.5)">🏆</div>
+        <div class="feat-title">XP, Streaks &amp; Awards</div>
+        <div class="feat-desc">Every task earns XP. Every session builds your streak. Unlock achievement shields with real milestones — progress that feels genuinely rewarding, not clinical.</div>
+        <div class="feat-tag" style="background:rgba(255,204,0,.1);color:var(--gold)">Dopamine-first</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(46,42,92,.7)">📊</div>
+        <div class="feat-title">Weekly Wrapped</div>
+        <div class="feat-desc">Each week, see what you actually achieved — with a personalised title like "Momentum Machine" or "Deep Focus Explorer." ADHD brains forget their wins. We fix that.</div>
+        <div class="feat-tag">Your weekly proof</div>
+      </div>
+      <div class="feat-card" style="--accent: linear-gradient(90deg,var(--orange),var(--purple))">
+        <div class="feat-icon" style="background:rgba(46,42,92,.5)">🌙</div>
+        <div class="feat-title">Designed for ADHD</div>
+        <div class="feat-desc">Dark focused interface. One action per screen. Gamified without being childish. Celebratory, never nagging. This app is entirely on your side.</div>
+        <div class="feat-tag" style="background:rgba(232,132,90,.1);color:var(--orange)">Zero overwhelm</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE -->
+<section id="showcase">
+  <div class="wrap">
+
+    <!-- Brain Dump -->
+    <div class="show-row">
+      <div>
+        <div class="sec-label">Brain Dump</div>
+        <h2 class="sec-title">Catch everything first.<br/><span class="grad-p">Let AI sort it.</span></h2>
+        <p class="sec-sub">The ADHD brain is a swirling mess of ideas and half-formed thoughts. Stop trying to organise on the fly. Just get it all out — ADH Do It's AI turns your chaos into structured Quick Wins and Quests automatically.</p>
+        <ul class="show-list">
+          <li><div class="chk chk-p">✓</div><span>Type everything in one go — no categories, no format required</span></li>
+          <li><div class="chk chk-p">✓</div><span>AI automatically classifies tasks as Quick Wins or Quests</span></li>
+          <li><div class="chk chk-p">✓</div><span>Review, skip, or add all suggestions in one tap</span></li>
+        </ul>
+      </div>
+      <div class="show-img-wrap">
+        <picture>
+          <source type="image/webp" srcset="screenshots/adh/5_braindump_results-660.webp 660w, screenshots/adh/5_braindump_results-990.webp 990w" sizes="(max-width: 768px) 80vw, 300px" />
+          <img class="show-img" src="screenshots/adh/5_braindump_results.png" alt="ADH Do It Brain Dump — ADHD app turning overwhelming thoughts into organised, actionable tasks using AI" loading="lazy" width="660" height="1434" />
+        </picture>
+      </div>
+    </div>
+
+    <!-- Focus Zone -->
+    <div class="show-row flip">
+      <div>
+        <div class="sec-label">Focus Zone</div>
+        <h2 class="sec-title">Deep work.<br/><span class="grad-p">On your terms.</span></h2>
+        <p class="sec-sub">Time blindness is real. The Focus Zone gives you a tactile, draggable timer — so the passage of time feels physical, not invisible. Pair with ambient soundscapes built for concentration.</p>
+        <ul class="show-list">
+          <li><div class="chk chk-p">✓</div><span>Draggable dial — set your session length exactly as you want it</span></li>
+          <li><div class="chk chk-p">✓</div><span>Ambient soundscapes: White Noise, Cosmic, Dark</span></li>
+          <li><div class="chk chk-p">✓</div><span>Every session earns XP and builds your focus streak</span></li>
+        </ul>
+      </div>
+      <div class="show-img-wrap">
+        <picture>
+          <source type="image/webp" srcset="screenshots/adh/3_focus-660.webp 660w, screenshots/adh/3_focus-990.webp 990w" sizes="(max-width: 768px) 80vw, 300px" />
+          <img class="show-img" src="screenshots/adh/3_focus.png" alt="ADH Do It Focus Zone — draggable circular timer helping people with ADHD stay on task and overcome time blindness" loading="lazy" width="660" height="1434" />
+        </picture>
+      </div>
+    </div>
+
+    <!-- Celebration / Awards -->
+    <div class="show-row">
+      <div>
+        <div class="sec-label">Awards &amp; Streaks</div>
+        <h2 class="sec-title">Progress that<br/><span class="grad-o">actually feels good.</span></h2>
+        <p class="sec-sub">ADHD brains need external reward systems — so we built one that's genuinely satisfying. Earned shields with real milestones, streaks that build momentum, and a confetti burst every time you complete something.</p>
+        <ul class="show-list">
+          <li><div class="chk chk-o">✓</div><span>Shield achievements for tasks completed and focus time</span></li>
+          <li><div class="chk chk-o">✓</div><span>Daily streaks across app use, tasks, and focus sessions</span></li>
+          <li><div class="chk chk-o">✓</div><span>Confetti celebrations on every milestone — because you earned it</span></li>
+        </ul>
+      </div>
+      <div class="show-img-wrap">
+        <picture>
+          <source type="image/webp" srcset="screenshots/adh/2_celebrate-660.webp 660w, screenshots/adh/2_celebrate-990.webp 990w" sizes="(max-width: 768px) 80vw, 300px" />
+          <img class="show-img" src="screenshots/adh/2_celebrate.png" alt="ADH Do It — dopamine-rewarding confetti animation celebrating task completion, designed for ADHD motivation" loading="lazy" width="660" height="1434" />
+        </picture>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- DOWNLOAD -->
+<section id="download">
+  <div class="wrap">
+    <div class="dl-inner">
+      <div class="sec-label" style="justify-content:center">Download Free</div>
+      <h2 class="sec-title center">ADH Do It isn't another app<br/>that makes you feel behind.</h2>
+      <p class="sec-sub center">It's the one that finally makes you feel capable.<br/>Made by an ADHD team. For the ADHD brain.</p>
+      <div class="dl-badges badge-wrap">
+        <div class="badge-soon"><svg width="17" height="21" viewBox="0 0 17 21" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M14.29 11.08c-.02-2.27 1.86-3.37 1.94-3.42-1.06-1.55-2.71-1.76-3.3-1.78-1.4-.14-2.73.82-3.44.82-.72 0-1.83-.8-3.01-.78C4.9 5.95 3.46 6.9 2.69 8.36c-1.6 2.77-.41 6.87 1.15 9.12.77 1.1 1.67 2.33 2.87 2.28 1.15-.05 1.59-.74 2.98-.74 1.38 0 1.78.74 2.99.72 1.24-.02 2.02-1.11 2.77-2.22.88-1.27 1.24-2.51 1.26-2.57-.03-.01-2.41-.93-2.43-3.87zm-2.27-7.12C12.65 3.05 13.09 2 12.97.93c-.92.04-2.03.61-2.69 1.38-.59.68-1.1 1.77-.96 2.82 1.02.08 2.07-.52 2.7-1.17z"/></svg><div><span class="badge-label">Coming soon</span><span class="badge-name">App Store</span></div><span class="soon-chip">Soon</span></div>
+        <div class="badge-soon"><svg width="20" height="22" viewBox="0 0 20 22" xmlns="http://www.w3.org/2000/svg"><path d="M1.22.36C.83.56.56.99.56 1.56v18.89c0 .57.27 1 .66 1.19l.08.05 10.58-10.58v-.25L1.3.31l-.08.05z" fill="#4285F4"/><path d="M15.41 14.7l-3.53-3.53v-.25l3.53-3.53.08.05 4.18 2.38c1.19.68 1.19 1.78 0 2.45l-4.18 2.38-.08.05z" fill="#FBBC04"/><path d="M15.49 14.65L11.88 11 1.22 21.64c.39.42 1.04.47 1.77.05l12.5-7.04" fill="#34A853"/><path d="M15.49 7.35L2.99.31C2.26-.11 1.61-.06 1.22.36L11.88 11l3.61-3.65z" fill="#EA4335"/></svg><div><span class="badge-label">Coming soon</span><span class="badge-name">Google Play</span></div><span class="soon-chip">Soon</span></div>
+      </div>
+      <p style="margin-top:18px;font-size:14px;color:var(--sec)"><span class="stars">★★★★★</span> &nbsp;Free to download</p>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTA TEASER -->
+<section id="counta" style="padding: 80px 0; border-top: 1px solid rgba(255,255,255,.04);">
+  <div class="wrap">
+    <div style="background:var(--bg-card);border-radius:28px;padding:48px;border:1px solid rgba(232,132,90,.12);display:grid;grid-template-columns:1fr auto;gap:56px;align-items:center;position:relative;overflow:hidden;">
+      <div style="position:absolute;right:-60px;top:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(232,132,90,.06) 0%,transparent 70%);border-radius:50%;pointer-events:none;"></div>
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(232,132,90,.1);border:1px solid rgba(232,132,90,.25);padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;color:var(--orange);margin-bottom:14px;letter-spacing:.3px;">Also from The ADHD Studio</div>
+        <h2 style="font-size:clamp(26px,3.5vw,38px);font-weight:800;margin-bottom:12px;">Meet <span class="grad-o">Counta</span></h2>
+        <p style="font-size:15px;color:var(--sec);line-height:1.75;max-width:480px;margin-bottom:24px;">Count down to the moments that matter — then actually save for them. Goal-based savings plans designed for ADHD brains, without the spreadsheet.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;">
+          <a href="https://apps.apple.com/gb/app/counta-countdown-save/id6770090810" class="badge-apple" target="_blank" rel="noopener"><svg width="17" height="21" viewBox="0 0 17 21" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M14.29 11.08c-.02-2.27 1.86-3.37 1.94-3.42-1.06-1.55-2.71-1.76-3.3-1.78-1.4-.14-2.73.82-3.44.82-.72 0-1.83-.8-3.01-.78C4.9 5.95 3.46 6.9 2.69 8.36c-1.6 2.77-.41 6.87 1.15 9.12.77 1.1 1.67 2.33 2.87 2.28 1.15-.05 1.59-.74 2.98-.74 1.38 0 1.78.74 2.99.72 1.24-.02 2.02-1.11 2.77-2.22.88-1.27 1.24-2.51 1.26-2.57-.03-.01-2.41-.93-2.43-3.87zm-2.27-7.12C12.65 3.05 13.09 2 12.97.93c-.92.04-2.03.61-2.69 1.38-.59.68-1.1 1.77-.96 2.82 1.02.08 2.07-.52 2.7-1.17z"/></svg><div><span class="badge-label">Download on the</span><span class="badge-name">App Store</span></div></a>
+          <a href="https://play.google.com/store/apps/details?id=com.timtomstudio.countdown&pcampaignid=web_share" class="badge-gplay" target="_blank" rel="noopener"><svg width="20" height="22" viewBox="0 0 20 22" xmlns="http://www.w3.org/2000/svg"><path d="M1.22.36C.83.56.56.99.56 1.56v18.89c0 .57.27 1 .66 1.19l.08.05 10.58-10.58v-.25L1.3.31l-.08.05z" fill="#4285F4"/><path d="M15.41 14.7l-3.53-3.53v-.25l3.53-3.53.08.05 4.18 2.38c1.19.68 1.19 1.78 0 2.45l-4.18 2.38-.08.05z" fill="#FBBC04"/><path d="M15.49 14.65L11.88 11 1.22 21.64c.39.42 1.04.47 1.77.05l12.5-7.04" fill="#34A853"/><path d="M15.49 7.35L2.99.31C2.26-.11 1.61-.06 1.22.36L11.88 11l3.61-3.65z" fill="#EA4335"/></svg><div><span class="badge-label">GET IT ON</span><span class="badge-name">Google Play</span></div></a>
+        </div>
+        <a href="counta.html" style="font-size:14px;font-weight:600;color:var(--orange);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:gap .2s;" onmouseover="this.style.gap='10px'" onmouseout="this.style.gap='6px'">See the full story →</a>
+      </div>
+      <div style="flex-shrink:0;">
+        <img src="screenshots/counta/1_mockup.png" alt="Counta app" loading="lazy" style="height:260px;width:auto;filter:drop-shadow(0 20px 40px rgba(0,0,0,.5));border-radius:24px;" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CUSTOM BUILDS -->
+<section id="custom">
+  <div class="wrap center">
+    <div class="sec-label" style="justify-content:center">For Organisations &amp; Individuals</div>
+    <h2 class="sec-title center">Need a custom<br/><span class="grad-p">ADHD-focused app?</span></h2>
+    <p class="sec-sub center">We build bespoke apps for healthcare providers, businesses, and individuals. Our team is neurodiverse — we don't just build these apps, we live them.</p>
+    <div class="cust-grid" style="text-align:left">
+      <div class="cust-card">
+        <div class="cust-icon">🏥</div>
+        <div class="cust-title">Healthcare</div>
+        <div class="cust-desc">Custom apps to support ADHD patients, clinicians, and care pathways. Built with lived experience and designed for real-world clinical use.</div>
+      </div>
+      <div class="cust-card">
+        <div class="cust-icon">🏢</div>
+        <div class="cust-title">Businesses</div>
+        <div class="cust-desc">Productivity and workflow tools designed with neurodivergent employees in mind. Retain talent, reduce friction, and see measurable results.</div>
+      </div>
+      <div class="cust-card">
+        <div class="cust-icon">👤</div>
+        <div class="cust-title">Individuals &amp; Coaches</div>
+        <div class="cust-desc">Have a specific idea for an ADHD tool? We'll build it with you — from concept to App Store. We've done it ourselves, twice.</div>
+      </div>
+    </div>
+    <a href="mailto:hello@timtomstudio.co.uk" class="btn btn-ghost">Let's talk → hello@timtomstudio.co.uk</a>
+  </div>
+</section>
+
+<!-- YOUTUBE -->
+<section id="youtube">
+  <div class="wrap">
+    <div class="yt-inner">
+      <div>
+        <div class="yt-chip">▶ YouTube</div>
+        <h2 class="sec-title" style="margin-bottom:10px">The ADHD Studio<br/>on YouTube</h2>
+        <p class="sec-sub">Videos on ADHD productivity, app updates, and building tools that actually work for neurodivergent brains. Subscribe to follow the journey.</p>
+      </div>
+      <a href="https://www.youtube.com/@The-ADHD-Studio" target="_blank" rel="noopener" class="btn btn-orange" style="flex-shrink:0">▶ Subscribe on YouTube</a>
+    </div>
+  </div>
+</section>
+
+<!-- SEO LINK PAGES -->
+<section id="seo-links">
+  <div class="wrap">
+    <div class="sec-label" style="justify-content:center">Resources</div>
+    <h2 class="sec-title center" style="margin-bottom:6px">Understanding ADHD<br/><span class="grad-p">in Modern Life</span></h2>
+    <p class="sec-sub center">Practical guides written by an ADHD team — no fluff, no productivity lectures.</p>
+    <div class="seo-grid" style="grid-template-columns:repeat(2,1fr)">
+      <a href="what-is-adhd-time-blindness.html" class="seo-card">
+        <div class="seo-card-label">Guide</div>
+        <div class="seo-card-title">What is ADHD Time Blindness?</div>
+        <div class="seo-card-desc">Why people with ADHD struggle to feel time passing — and what actually helps, including the tools we built to solve it.</div>
+        <div class="seo-card-arrow">Read guide →</div>
+      </a>
+      <a href="adhd-productivity-apps.html" class="seo-card">
+        <div class="seo-card-label">Guide</div>
+        <div class="seo-card-title">Why Most Productivity Apps Fail ADHD Brains</div>
+        <div class="seo-card-desc">Generic task managers were built for neurotypical brains. Here's what a genuinely ADHD-first app looks like — and why it matters.</div>
+        <div class="seo-card-arrow">Read guide →</div>
+      </a>
+      <a href="adhd-and-money.html" class="seo-card">
+        <div class="seo-card-label">Guide</div>
+        <div class="seo-card-title">ADHD &amp; Money: Impulse Spending &amp; Budgeting</div>
+        <div class="seo-card-desc">Why ADHD makes budgeting genuinely hard — and how goal-based saving can actually work for neurodivergent brains.</div>
+        <div class="seo-card-arrow">Read guide →</div>
+      </a>
+      <a href="about.html" class="seo-card">
+        <div class="seo-card-label">About Us</div>
+        <div class="seo-card-title">The ADHD Studio: Our Story</div>
+        <div class="seo-card-desc">We're a neurodiverse team who built these apps because we needed them ourselves. Here's who we are and what we're building.</div>
+        <div class="seo-card-arrow">Meet the team →</div>
+      </a>
+      <a href="custom-adhd-apps.html" class="seo-card">
+        <div class="seo-card-label">Custom Builds</div>
+        <div class="seo-card-title">Bespoke ADHD Apps for Your Organisation</div>
+        <div class="seo-card-desc">Healthcare, education, business or your own idea — we build custom ADHD-focused apps shaped entirely around your users. No off-the-shelf compromises.</div>
+        <div class="seo-card-arrow">See what we can build →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <div class="foot-logo" style="display:flex;align-items:center;gap:8px"><img src="favicon.png" alt="" style="width:22px;height:22px;border-radius:6px;object-fit:cover"> The ADHD Studio</div>
+      <ul class="foot-links">
+        <li><a href="#features">ADH Do It</a></li>
+        <li><a href="counta.html">Counta</a></li>
+        <li><a href="custom-adhd-apps.html">For Business</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="mailto:hello@timtomstudio.co.uk">Contact</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="#" onclick="showCookieBanner();return false;">Cookie settings</a></li>
+      </ul>
+      <div class="foot-credit">
+        <a href="https://www.youtube.com/@The-ADHD-Studio" target="_blank" rel="noopener" aria-label="The ADHD Studio on YouTube" style="display:inline-flex;align-items:center;gap:7px;color:var(--sec);text-decoration:none;font-size:13px;font-weight:500;margin-bottom:10px;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--sec)'">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          YouTube
+        </a><br/>
+        Built by <a href="https://timtomstudio.co.uk" target="_blank">Tim Tom Studio</a><br/>
+        <span style="color:var(--muted)">© 2026 The ADHD Studio. All rights reserved.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  const cosmos = document.getElementById('cosmos');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Star colours: mostly white, some tinted
+  const colours = [
+    'rgba(255,255,255,1)',   // pure white   — most common
+    'rgba(255,255,255,1)',
+    'rgba(255,255,255,1)',
+    'rgba(184,170,255,1)',   // purple tint
+    'rgba(255,204,0,1)',     // gold tint
+    'rgba(232,132,90,1)',    // orange tint — rare
+  ];
+
+  const totalStars = 160;
+
+  for (let i = 0; i < totalStars; i++) {
+    const star  = document.createElement('div');
+    const rand  = Math.random();
+
+    // Size buckets: tiny (most), small, medium, occasional larger
+    let size, baseOp, maxOp, scaleAmt;
+    if (rand < 0.60)      { size = 1;   baseOp = 0.1; maxOp = 0.55; scaleAmt = 1.2; }
+    else if (rand < 0.85) { size = 1.5; baseOp = 0.15; maxOp = 0.75; scaleAmt = 1.4; }
+    else if (rand < 0.96) { size = 2;   baseOp = 0.2; maxOp = 0.9; scaleAmt = 1.5; }
+    else                  { size = 3;   baseOp = 0.3; maxOp = 1.0; scaleAmt = 1.6; }
+
+    // Twinkle speed
+    const speeds = ['twinkle-slow', 'twinkle-med', 'twinkle-fast'];
+    const speed  = speeds[Math.floor(Math.random() * speeds.length)];
+    const dur    = (Math.random() * 4 + 2).toFixed(1) + 's';
+    const delay  = (Math.random() * -8).toFixed(2) + 's';
+    const colour = colours[Math.floor(Math.random() * colours.length)];
+
+    star.className = `star ${speed}`;
+    star.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${(Math.random()*100).toFixed(2)}%;
+      top:${(Math.random()*100).toFixed(2)}%;
+      background:${colour};
+      box-shadow: 0 0 ${size*2}px ${colour};
+      --d:${dur}; --delay:${delay};
+      --min-op:${baseOp}; --max-op:${maxOp}; --scale:${scaleAmt};
+      opacity:${baseOp};
+    `;
+    cosmos.appendChild(star);
+  }
+
+  // 3 subtle shooting stars (skip if reduced motion)
+  if (reducedMotion) return;
+  const angles = [-15, -22, -10];
+  const positions = [
+    { top: '12%', left: '15%' },
+    { top: '35%', left: '60%' },
+    { top: '65%', left: '30%' },
+  ];
+  positions.forEach((pos, i) => {
+    const shoot = document.createElement('div');
+    shoot.className = 'shoot';
+    shoot.style.cssText = `
+      top:${pos.top}; left:${pos.left};
+      --angle:${angles[i]}deg;
+      --dur:${12 + i * 7}s;
+      --delay:${i * 4 + 2}s;
+    `;
+    cosmos.appendChild(shoot);
+  });
+})();
+</script>
+
+</main>
+<!-- Lightbox -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot viewer">
+  <button id="lb-close" aria-label="Close screenshot viewer">✕</button>
+  <img id="lb-img" src="" alt="" />
+</div>
+<script>
+(function(){
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbClose = document.getElementById('lb-close');
+
+  document.querySelectorAll('.strip-img').forEach(img => {
+    // Make keyboard accessible
+    img.setAttribute('tabindex', '0');
+    img.setAttribute('role', 'button');
+    img.setAttribute('aria-haspopup', 'dialog');
+
+    function openLightbox(el) {
+      // For <picture> elements, get the src from the <img> inside
+      var actualImg = el.tagName === 'IMG' ? el : el;
+      lbImg.src = actualImg.currentSrc || actualImg.src;
+      lbImg.alt = actualImg.alt;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('lb-close').focus();
+    }
+
+    img.addEventListener('click', () => openLightbox(img));
+    img.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(img); }
+    });
+  });
+
+  var lastFocused = null;
+
+  function close() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    if (lastFocused) { lastFocused.focus(); lastFocused = null; }
+  }
+
+  document.querySelectorAll('.strip-img').forEach(img => {
+    img.addEventListener('click', () => { lastFocused = img; });
+    img.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') lastFocused = img; });
+  });
+
+  lb.addEventListener('click', e => { if (e.target !== lbImg) close(); });
+  lbClose.addEventListener('click', close);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+})();
+</script>
+
+<script>
+// Cookie consent + Google Analytics gating
+(function() {
+  var GA_ID = 'G-XXXXXXXXXX';
+  var choice = localStorage.getItem('cookie_consent');
+
+  function loadGA() {
+    if (GA_ID === 'G-XXXXXXXXXX') return; // placeholder — swap in real ID first
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', GA_ID, { anonymize_ip: true });
+  }
+
+  if (choice === 'accepted') { loadGA(); return; }
+  if (choice === 'declined') { return; }
+
+  // Show banner on first visit
+  document.addEventListener('DOMContentLoaded', function() {
+    var b = document.getElementById('cookie-banner');
+    if (b) b.style.display = 'flex';
+  });
+
+  window.cookieChoice = function(accepted) {
+    localStorage.setItem('cookie_consent', accepted ? 'accepted' : 'declined');
+    var b = document.getElementById('cookie-banner');
+    if (b) {
+      b.classList.add('hide');
+      setTimeout(function(){ b.style.display = 'none'; }, 280);
+    }
+    if (accepted) loadGA();
+  };
+
+  window.showCookieBanner = function() {
+    var b = document.getElementById('cookie-banner');
+    if (b) {
+      b.classList.remove('hide');
+      b.style.display = 'flex';
+    }
+  };
+})();
+
+// Mobile nav
+function toggleMobileNav() {
+  var drawer = document.getElementById('nav-mobile');
+  var burger = document.querySelector('.nav-burger');
+  var open = drawer.classList.toggle('open');
+  burger.classList.toggle('open', open);
+  burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+function closeMobileNav() {
+  document.getElementById('nav-mobile').classList.remove('open');
+  var burger = document.querySelector('.nav-burger');
+  burger.classList.remove('open');
+  burger.setAttribute('aria-label', 'Open menu');
+  burger.setAttribute('aria-expanded', 'false');
+}
+</script>
+</body>
+</html>

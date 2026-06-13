@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why Most Productivity Apps Fail ADHD Brains | The ADHD Studio</title>
+  <meta name="description" content="Generic task managers were built for neurotypical brains. Here is why they fail people with ADHD and what a genuinely ADHD-first app looks like." />
+  <meta name="keywords" content="ADHD productivity apps, best app for ADHD, ADHD task manager, ADHD planner app, neurodivergent productivity, ADHD to-do list, brain dump app ADHD, ADHD organisation app" />
+    <meta property="og:title" content="Why Most Productivity Apps Fail ADHD Brains | The ADHD Studio" />
+  <meta property="og:description" content="Generic task managers were built for neurotypical brains. Here is why they fail people with ADHD and what a genuinely ADHD-first app looks like." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://theadhdstudio.co.uk/adhd-productivity-apps.html" />
+  <meta property="og:image" content="https://theadhdstudio.co.uk/og-image.png" />
+  <link rel="canonical" href="https://theadhdstudio.co.uk/adhd-productivity-apps.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#0D0F1A;--bg-card:#161827;--orange:#E8845A;--purple:#7B6FD4;--focus:#8B7FE8;--glow:#B8AAFF;--gold:#FFCC00;--text:#FFFFFF;--sec:#8B8FA8;--muted:#4A4E63}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;line-height:1.7}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(13,15,26,.9);backdrop-filter:blur(16px);border-bottom:1px solid rgba(123,111,212,.1)}
+    .logo{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;color:var(--text);text-decoration:none}
+    .logo-icon{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--purple),var(--orange));display:flex;align-items:center;justify-content:center;font-size:15px}
+    .nav-home{color:var(--sec);text-decoration:none;font-size:14px;font-weight:500}
+    .nav-home:hover{color:var(--text)}
+    .wrap{max-width:740px;margin:0 auto;padding:0 32px}
+    article{padding:130px 0 80px}
+    .eyebrow{display:inline-flex;align-items:center;gap:7px;background:rgba(232,132,90,.1);border:1px solid rgba(232,132,90,.25);padding:6px 14px;border-radius:30px;font-size:12px;font-weight:600;color:var(--orange);margin-bottom:20px}
+    h1{font-size:clamp(30px,5vw,48px);font-weight:800;line-height:1.12;margin-bottom:20px}
+    .grad-o{background:linear-gradient(135deg,var(--orange),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .grad-p{background:linear-gradient(135deg,var(--purple),var(--glow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .lead{font-size:17px;color:var(--sec);line-height:1.8;margin-bottom:40px;border-left:3px solid var(--orange);padding-left:20px}
+    h2{font-size:22px;font-weight:700;margin:44px 0 13px;color:var(--text)}
+    h3{font-size:17px;font-weight:700;margin:28px 0 9px;color:var(--text)}
+    p{color:var(--sec);margin-bottom:16px;font-size:15px}
+    strong{color:var(--text);font-weight:600}
+    .callout{background:var(--bg-card);border-radius:14px;padding:22px 24px;border-left:3px solid var(--orange);margin:24px 0}
+    .callout p{margin:0;font-size:15px;color:var(--sec)}
+    ul,ol{color:var(--sec);margin:0 0 18px 22px;font-size:15px}
+    li{margin-bottom:8px}
+    .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+    .comp-card{background:var(--bg-card);border-radius:14px;padding:20px;border:1px solid rgba(255,255,255,.05)}
+    .comp-card.bad{border-color:rgba(255,80,80,.15)}
+    .comp-card.good{border-color:rgba(123,111,212,.2)}
+    .comp-label{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px}
+    .comp-label.bad{color:#FF6B6B}
+    .comp-label.good{color:var(--glow)}
+    .comp-item{font-size:13px;color:var(--sec);margin-bottom:7px;padding-left:16px;position:relative}
+    .comp-item::before{content:'';position:absolute;left:0;top:7px;width:6px;height:6px;border-radius:50%}
+    .comp-item.bad::before{background:#FF6B6B}
+    .comp-item.good::before{background:var(--purple)}
+    .principle-list{display:flex;flex-direction:column;gap:12px;margin:20px 0}
+    .principle{background:var(--bg-card);border-radius:12px;padding:18px 20px;display:flex;gap:14px;align-items:flex-start;border:1px solid rgba(255,255,255,.04)}
+    .p-num{font-size:20px;font-weight:800;color:var(--purple);flex-shrink:0;width:32px}
+    .p-title{font-size:14px;font-weight:700;margin-bottom:4px;color:var(--text)}
+    .p-desc{font-size:13px;color:var(--sec);line-height:1.6}
+    .app-cta{background:var(--bg-card);border-radius:20px;padding:36px;text-align:center;border:1px solid rgba(123,111,212,.15);margin-top:48px}
+    .btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-family:'Outfit',sans-serif;font-weight:700;border-radius:30px;padding:13px 26px;font-size:15px;background:linear-gradient(135deg,var(--purple),var(--focus));color:#fff;box-shadow:0 6px 22px rgba(123,111,212,.4);transition:transform .15s}
+    .btn:hover{transform:translateY(-2px)}
+    .related{margin-top:48px}
+    .related-title{font-size:16px;font-weight:700;margin-bottom:14px;color:var(--text)}
+    .rel-link{color:var(--glow);text-decoration:none;font-size:14px;font-weight:500;display:block;margin-bottom:8px}
+    .rel-link:hover{text-decoration:underline}
+    footer{padding:36px 0 24px;border-top:1px solid rgba(255,255,255,.05);text-align:center;color:var(--muted);font-size:12px}
+    footer a{color:var(--purple);text-decoration:none}
+    @media(max-width:700px){nav{padding:14px 22px}.compare-grid{grid-template-columns:1fr}}
+  </style>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+
+  <!-- Cookie banner -->
+  <style>
+    #cookie-banner {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      z-index: 9999; width: min(560px, calc(100vw - 32px));
+      background: #161827; border: 1px solid rgba(123,111,212,.25);
+      border-radius: 18px; padding: 20px 24px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.6);
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      font-family: 'Outfit', sans-serif;
+      animation: cb-in .3s ease;
+    }
+    @keyframes cb-in { from { opacity:0; transform:translateX(-50%) translateY(16px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+    #cookie-banner.hide { animation: cb-out .25s ease forwards; }
+    @keyframes cb-out { to { opacity:0; transform:translateX(-50%) translateY(16px); } }
+    #cookie-banner p { font-size: 13px; color: #8B8FA8; line-height: 1.55; flex: 1; min-width: 200px; margin: 0; }
+    #cookie-banner a { color: #B8AAFF; text-decoration: none; }
+    #cookie-banner a:hover { text-decoration: underline; }
+    .cb-btns { display: flex; gap: 10px; flex-shrink: 0; }
+    .cb-accept { background: linear-gradient(135deg,#7B6FD4,#8B7FE8); color: #fff; border: none; border-radius: 30px; padding: 9px 18px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif; transition: transform .15s; }
+    .cb-accept:hover { transform: translateY(-1px); }
+    .cb-decline { background: transparent; color: #8B8FA8; border: 1px solid rgba(255,255,255,.1); border-radius: 30px; padding: 9px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Outfit', sans-serif; transition: border-color .15s, color .15s; }
+    .cb-decline:hover { border-color: rgba(255,255,255,.25); color: #fff; }
+    @media (max-width: 480px) { #cookie-banner { bottom: 16px; padding: 16px; } .cb-btns { width: 100%; } .cb-accept, .cb-decline { flex: 1; text-align: center; } }
+  </style>
+</head>
+<body>
+
+<!-- Cookie consent banner -->
+<div id="cookie-banner" role="dialog" aria-label="Cookie preferences" style="display:none">
+  <p>We use cookies to improve your experience. Analytics help us understand how people find us.
+     See our <a href="privacy.html">privacy policy</a>.</p>
+  <div class="cb-btns">
+    <button class="cb-decline" onclick="cookieChoice(false)">Essential only</button>
+    <button class="cb-accept" onclick="cookieChoice(true)">Accept analytics</button>
+  </div>
+</div>
+<nav>
+  <a href="index.html" class="logo"><div class="logo-icon">🧠</div>The ADHD Studio</a>
+  <a href="index.html" class="nav-home">← Back to home</a>
+</nav>
+
+<article>
+  <div class="wrap">
+    <div class="eyebrow">⚡ ADHD Guide</div>
+    <h1>Why most productivity apps <span class="grad-o">fail ADHD brains</span></h1>
+    <p class="lead">There are thousands of productivity apps. Most people with ADHD have tried dozens of them. And most people with ADHD have eventually abandoned all of them. That's not a personal failing — it's a design problem.</p>
+
+    <h2>The problem isn't you. It's the assumption.</h2>
+    <p>The majority of productivity apps are built on the same assumption: that the user <strong>wants to do the tasks</strong>, and just needs a system to organise them. The app's job is to capture, categorise, and remind.</p>
+    <p>For neurotypical users, this works reasonably well. They have enough internal motivation to act on reminders, enough executive function to prioritise lists, and enough working memory to hold future tasks in mind.</p>
+    <p>For ADHD brains, <strong>none of those things are reliably present</strong>. And a system that assumes they are will fail as soon as the novelty wears off — usually within two weeks.</p>
+
+    <div class="callout">
+      <p>ADHD is a dopamine regulation disorder. Without enough dopamine, the ADHD brain struggles to initiate tasks, sustain effort, and feel motivated by future rewards. No amount of better organisation fixes that.</p>
+    </div>
+
+    <h2>What generic apps get wrong</h2>
+    <div class="compare-grid">
+      <div class="comp-card bad">
+        <div class="comp-label bad">Generic productivity apps</div>
+        <div class="comp-item bad">Assume internal motivation exists</div>
+        <div class="comp-item bad">Overwhelming list views with dozens of tasks</div>
+        <div class="comp-item bad">Guilt-inducing overdue counters</div>
+        <div class="comp-item bad">No reward for completion beyond ticking a box</div>
+        <div class="comp-item bad">Complex categorisation upfront</div>
+        <div class="comp-item bad">Designed for neurotypical task management</div>
+      </div>
+      <div class="comp-card good">
+        <div class="comp-label good">ADHD-first apps</div>
+        <div class="comp-item good">Build in dopamine hits at every step</div>
+        <div class="comp-item good">One clear action per screen</div>
+        <div class="comp-item good">Encouraging, never nagging</div>
+        <div class="comp-item good">XP, streaks and visual celebrations</div>
+        <div class="comp-item good">AI does the sorting for you</div>
+        <div class="comp-item good">Designed from lived ADHD experience</div>
+      </div>
+    </div>
+
+    <h2>The 5 principles of genuinely ADHD-first app design</h2>
+    <div class="principle-list">
+      <div class="principle">
+        <div class="p-num">1</div>
+        <div>
+          <div class="p-title">External motivation over internal</div>
+          <div class="p-desc">The app must supply the reward signal that the ADHD brain's dopamine system doesn't produce reliably. XP points, confetti, milestone unlocks — these aren't childish extras. They're functional requirements.</div>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="p-num">2</div>
+        <div>
+          <div class="p-title">Reduce decisions to near zero</div>
+          <div class="p-desc">Every decision costs executive function. An ADHD-first app should never make the user think "what do I do next?" The next action should be obvious, singular, and low-friction.</div>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="p-num">3</div>
+        <div>
+          <div class="p-title">Solve time blindness, don't ignore it</div>
+          <div class="p-desc">Generic apps assume the user knows how to manage their time. ADHD apps must actively help users feel time passing — through visual timers, physical metaphors like draggable dials, and session anchoring.</div>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="p-num">4</div>
+        <div>
+          <div class="p-title">Dump first, organise second</div>
+          <div class="p-desc">The ADHD brain can't filter and organise simultaneously. An ADHD-first app separates capture from organisation completely — get everything out first, let the app handle sorting.</div>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="p-num">5</div>
+        <div>
+          <div class="p-title">Make progress visible</div>
+          <div class="p-desc">ADHD brains often lose track of how much they've achieved. Showing progress visually — streaks, completion rings, weekly recaps — counteracts the ADHD tendency to remember only what went wrong.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Why Brain Dump changes everything</h2>
+    <p>One of the most overlooked ADHD challenges is <strong>task capture under cognitive load</strong>. When the ADHD brain is overwhelmed, the idea of "make a task for each thing" is impossible — it requires the same executive function you don't currently have.</p>
+    <p>The Brain Dump feature in ADH Do It short-circuits this entirely. You type everything in one go — messy, disorganised, stream-of-consciousness — and the AI handles classification. The barrier to entry drops to near zero, which means the thoughts actually get captured instead of lost.</p>
+    <p>This is why "neurodiverse" isn't just a marketing word for us. It changes how you architect the feature, not just how you describe it.</p>
+
+    <h2>The gamification question</h2>
+    <p>Some people are sceptical of gamification in productivity tools — worried it feels patronising or gimmicky. For neurotypical users, maybe. For ADHD brains, <strong>gamification is functional medicine</strong>.</p>
+    <p>The same neurological difference that makes ADHD difficult — dysregulated dopamine — also makes reward signals unusually effective. ADHD brains respond strongly to clear, immediate, tangible rewards. Gamification done well isn't about making work feel like a game. It's about supplying the dopamine signal that sustains effort.</p>
+
+    <h2>What to look for in an ADHD productivity app</h2>
+    <ul>
+      <li>Does it reward completion immediately, not just log it?</li>
+      <li>Does it reduce the number of decisions you make per session?</li>
+      <li>Does it help you feel time passing, not just track it?</li>
+      <li>Does it encourage you, or just nag you?</li>
+      <li>Was it designed by people with ADHD, not just for them?</li>
+      <li>Does it have a low-friction capture method (like Brain Dump)?</li>
+    </ul>
+
+    <div class="app-cta">
+      <p style="font-size:17px;font-weight:700;color:var(--text);margin-bottom:8px">Try an app actually built for your brain</p>
+      <p style="margin-bottom:22px;color:var(--sec)">ADH Do It was designed from the ground up for ADHD brains, by an ADHD team. Free to download.</p>
+      <a href="index.html#download" class="btn">⚡ Download ADH Do It — Free</a>
+    </div>
+
+    <div class="related">
+      <div class="related-title">Related reading</div>
+      <a href="what-is-adhd-time-blindness.html" class="rel-link">→ What is ADHD time blindness?</a>
+      <a href="about.html" class="rel-link">→ About The ADHD Studio — our story</a>
+      <a href="index.html#features" class="rel-link">→ See all ADH Do It features</a>
+    </div>
+  </div>
+</article>
+
+<footer>
+  <a href="index.html">theadhdstudio.co.uk</a> &nbsp;·&nbsp; Built by <a href="https://timtomstudio.co.uk">Tim Tom Studio</a> &nbsp;·&nbsp; © 2025 The ADHD Studio
+</footer>
+
+<script>
+// Cookie consent + Google Analytics gating
+(function() {
+  var GA_ID = 'G-XXXXXXXXXX';
+  var choice = localStorage.getItem('cookie_consent');
+
+  function loadGA() {
+    if (GA_ID === 'G-XXXXXXXXXX') return; // placeholder — swap in real ID first
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', GA_ID, { anonymize_ip: true });
+  }
+
+  if (choice === 'accepted') { loadGA(); return; }
+  if (choice === 'declined') { return; }
+
+  // Show banner on first visit
+  document.addEventListener('DOMContentLoaded', function() {
+    var b = document.getElementById('cookie-banner');
+    if (b) b.style.display = 'flex';
+  });
+
+  window.showCookieBanner = function() {
+    localStorage.removeItem('cookie_consent');
+    var b = document.getElementById('cookie-banner');
+    if (b) { b.classList.remove('hide'); b.style.display = 'flex'; }
+  };
+  window.cookieChoice = function(accepted) {
+    localStorage.setItem('cookie_consent', accepted ? 'accepted' : 'declined');
+    var b = document.getElementById('cookie-banner');
+    if (b) {
+      b.classList.add('hide');
+      setTimeout(function(){ b.style.display = 'none'; }, 280);
+    }
+    if (accepted) loadGA();
+  };
+})();
+</script>
+</body>
+</html>

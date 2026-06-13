@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Counta — Countdown &amp; Save | The ADHD Studio</title>
+  <meta name="description" content="Counta helps you count down to the moments that matter and build a savings plan to get there. Set a goal, choose weekly or monthly saving, and watch your pot fill up. Free on iOS &amp; Android." />
+  <meta name="keywords" content="countdown app, savings app, ADHD budgeting, impulse spending ADHD, savings goal app, countdown timer, ADHD money app, Counta" />
+  <meta property="og:title" content="Counta — Countdown &amp; Save | The ADHD Studio" />
+  <meta property="og:description" content="Count down to what matters. Save to make it happen. Counta is the goal-based savings app designed for ADHD brains." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://theadhdstudio.co.uk/counta.html" />
+  <meta property="og:image" content="https://theadhdstudio.co.uk/screenshots/counta/1_mockup.png" />
+  <link rel="canonical" href="https://theadhdstudio.co.uk/counta.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "The ADHD Studio",
+    "url": "https://theadhdstudio.co.uk",
+    "logo": "https://theadhdstudio.co.uk/favicon.png",
+    "email": "hello@timtomstudio.co.uk"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Counta — Countdown &amp; Save",
+    "operatingSystem": "iOS, Android",
+    "applicationCategory": "FinanceApplication",
+    "description": "Counta helps you count down to the moments that matter and build a savings plan to get there. Set a goal, choose weekly or monthly saving, and watch your pot fill up. Designed for ADHD brains that struggle with budgeting and impulse spending.",
+    "url": "https://theadhdstudio.co.uk/counta.html",
+    "downloadUrl": "https://apps.apple.com/gb/app/counta-countdown-save/id6770090810",
+    "screenshot": "https://theadhdstudio.co.uk/screenshots/counta/1_mockup.png",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+    "author": { "@type": "Organization", "name": "The ADHD Studio" },
+    "keywords": "countdown app, savings app, ADHD budgeting, impulse spending, goal saving, ADHD finance"
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        #0D0F1A;
+      --bg-card:   #161827;
+      --bg-input:  #1C1F30;
+      --orange:    #E8845A;
+      --orange-dk: #7A3A1E;
+      --purple:    #7B6FD4;
+      --purple-dk: #2E2A5C;
+      --focus:     #8B7FE8;
+      --glow:      #B8AAFF;
+      --gold:      #FFCC00;
+      --teal:      #4ECDC4;
+      --pink:      #FF6B9D;
+      --text:      #FFFFFF;
+      --sec:       #8B8FA8;
+      --muted:     #4A4E63;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Outfit', sans-serif; line-height: 1.6; overflow-x: hidden; }
+
+    /* Cosmic background */
+    #cosmos { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    #cosmos::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% 20%, rgba(78,205,196,.05) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 70%, rgba(232,132,90,.04) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 50% 50%, rgba(255,107,157,.03) 0%, transparent 70%);
+    }
+    .star { position: absolute; border-radius: 50%; background: #fff; }
+    .star.twinkle-slow  { animation: twinkle var(--d, 4s) ease-in-out infinite var(--delay, 0s); }
+    .star.twinkle-med   { animation: twinkle var(--d, 2.5s) ease-in-out infinite var(--delay, 0s); }
+    .star.twinkle-fast  { animation: twinkle var(--d, 1.5s) ease-in-out infinite var(--delay, 0s); }
+    @keyframes twinkle {
+      0%, 100% { opacity: var(--min-op, 0.15); transform: scale(1); }
+      50%       { opacity: var(--max-op, 0.9);  transform: scale(var(--scale, 1.3)); }
+    }
+    .shoot { position: absolute; width: 120px; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.7), rgba(255,255,255,0)); animation: shoot var(--dur, 6s) linear infinite var(--delay, 2s); opacity: 0; transform-origin: left center; }
+    @keyframes shoot { 0% { opacity:0; transform:translateX(0) rotate(var(--angle,-20deg)); } 2% { opacity:1; } 8% { opacity:0; transform:translateX(180px) rotate(var(--angle,-20deg)); } 100% { opacity:0; transform:translateX(180px) rotate(var(--angle,-20deg)); } }
+
+    /* Nav */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 48px; display: flex; align-items: center; justify-content: space-between; background: rgba(13,15,26,.88); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(123,111,212,.1); }
+    .logo { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700; color: var(--text); text-decoration: none; }
+    .logo-icon { width: 30px; height: 30px; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .logo-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .nav-links a { color: var(--sec); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--text); }
+    .nav-pill { background: linear-gradient(135deg,var(--orange),#c8602a); color: var(--text) !important; padding: 9px 20px; border-radius: 30px; font-weight: 600 !important; font-size: 13px !important; box-shadow: 0 4px 18px rgba(232,132,90,.4); }
+
+    /* Hamburger */
+    .nav-burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .nav-burger span { display: block; width: 22px; height: 2px; background: var(--sec); border-radius: 2px; transition: transform .25s, opacity .25s; }
+    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-mobile { display: none; position: fixed; top: 57px; left: 0; right: 0; background: rgba(13,15,26,.97); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(123,111,212,.12); z-index: 99; padding: 20px 24px 28px; flex-direction: column; gap: 4px; }
+    .nav-mobile.open { display: flex; animation: nav-drop .2s ease; }
+    @keyframes nav-drop { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+    .nav-mobile a { color: var(--sec); text-decoration: none; font-size: 15px; font-weight: 500; padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,.05); transition: color .2s; }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile a:hover, .nav-mobile a.active { color: var(--text); }
+    .nav-mobile .nav-pill { margin-top: 10px; text-align: center; border-bottom: none; padding: 12px 20px; }
+
+    /* Layout */
+    section { position: relative; z-index: 1; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
+    .sec-label { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; color: var(--sec); margin-bottom: 14px; }
+    .sec-label::before { content: ''; width: 18px; height: 2px; background: linear-gradient(90deg,var(--teal),var(--orange)); }
+    h2.sec-title { font-size: clamp(28px,4vw,46px); font-weight: 800; line-height: 1.15; margin-bottom: 14px; }
+    .sec-sub { font-size: 16px; color: var(--sec); line-height: 1.75; max-width: 540px; }
+    .center { text-align: center; }
+    .sec-sub.center { margin: 0 auto; }
+    .grad-o { background: linear-gradient(135deg,var(--orange),var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .grad-t { background: linear-gradient(135deg,var(--teal),#44A39E); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* Buttons */
+    .btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-family: 'Outfit', sans-serif; font-weight: 700; border-radius: 30px; transition: transform .15s, box-shadow .15s; cursor: pointer; border: none; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-orange { background: linear-gradient(135deg,var(--orange),#c8602a); color: #fff; padding: 14px 30px; font-size: 16px; box-shadow: 0 8px 28px rgba(232,132,90,.4); }
+    .btn-orange:hover { box-shadow: 0 12px 36px rgba(232,132,90,.5); }
+    .btn-ghost { background: rgba(78,205,196,.1); border: 1px solid rgba(78,205,196,.3); color: var(--teal); padding: 14px 28px; font-size: 15px; }
+    .btn-ghost:hover { background: rgba(78,205,196,.2); }
+
+    /* Store badges */
+    .badge-apple, .badge-gplay { display: inline-flex; align-items: center; gap: 11px; background: #000; border-radius: 11px; padding: 10px 18px; text-decoration: none; color: #fff; min-width: 152px; border: 1px solid rgba(255,255,255,.13); transition: transform .15s, box-shadow .15s; font-family: 'Outfit', sans-serif; }
+    .badge-apple:hover, .badge-gplay:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.5); }
+    .badge-icon { flex-shrink: 0; display: flex; align-items: center; }
+    .badge-label { font-size: 9.5px; font-weight: 400; opacity: .75; display: block; line-height: 1.2; letter-spacing: .2px; }
+    .badge-name  { font-size: 17px; font-weight: 700; display: block; line-height: 1.2; letter-spacing: -.3px; }
+    .badge-wrap { display: flex; gap: 12px; flex-wrap: wrap; }
+    .stars { color: var(--gold); letter-spacing: 2px; }
+
+    /* Hero */
+    #hero { min-height: 100vh; display: flex; align-items: center; padding: 120px 0 80px; }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 7px; background: rgba(78,205,196,.1); border: 1px solid rgba(78,205,196,.28); padding: 6px 14px; border-radius: 30px; font-size: 12px; font-weight: 600; color: var(--teal); margin-bottom: 22px; letter-spacing: .3px; }
+    h1.hero-title { font-size: clamp(38px,5vw,62px); font-weight: 800; line-height: 1.08; margin-bottom: 20px; }
+    .hero-sub { font-size: 17px; color: var(--sec); line-height: 1.75; margin-bottom: 36px; }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; }
+    .hero-visual { display: flex; justify-content: center; }
+    .hero-img-wrap { position: relative; animation: bob 5s ease-in-out infinite; transform: rotate(6deg); }
+    @keyframes bob { 0%,100% { transform: rotate(6deg) translateY(0); } 50% { transform: rotate(6deg) translateY(-14px); } }
+    .hero-glow { position: absolute; inset: -50px; background: radial-gradient(ellipse, rgba(78,205,196,.15) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+    .hero-img { height: 580px; width: auto; filter: drop-shadow(0 40px 80px rgba(0,0,0,.75)); border-radius: 40px; }
+
+    /* Trust bar */
+    #trust { padding: 28px 0; border-top: 1px solid rgba(255,255,255,.04); border-bottom: 1px solid rgba(255,255,255,.04); }
+    .trust-row { display: flex; align-items: center; justify-content: center; gap: 44px; flex-wrap: wrap; }
+    .trust-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--sec); }
+
+    /* Screenshot strip */
+    #strip { padding: 80px 0; }
+    .strip-title { text-align: center; margin-bottom: 36px; }
+    .strip-outer { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: rgba(78,205,196,.3) transparent; }
+    .strip-outer::-webkit-scrollbar { height: 4px; }
+    .strip-outer::-webkit-scrollbar-track { background: transparent; }
+    .strip-outer::-webkit-scrollbar-thumb { background: rgba(78,205,196,.3); border-radius: 4px; }
+    .strip-scroll { display: flex; gap: 20px; padding: 12px 40px 24px; width: max-content; margin: 0 auto; }
+    .strip-img { height: 380px; width: auto; border-radius: 28px; flex-shrink: 0; filter: drop-shadow(0 20px 40px rgba(0,0,0,.6)); transition: transform .25s, filter .25s; cursor: zoom-in; display: block; }
+    .strip-img:hover { transform: scale(1.05) translateY(-6px); filter: drop-shadow(0 28px 50px rgba(0,0,0,.7)) brightness(1.05); }
+
+    /* Lightbox */
+    #lightbox { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(5,6,14,.92); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); align-items: center; justify-content: center; cursor: zoom-out; }
+    #lightbox.open { display: flex; animation: lb-in .22s ease; }
+    @keyframes lb-in { from { opacity: 0; } to { opacity: 1; } }
+    #lightbox img { max-height: 88vh; max-width: 88vw; width: auto; border-radius: 28px; box-shadow: 0 40px 100px rgba(0,0,0,.8); animation: lb-scale .25s cubic-bezier(.34,1.56,.64,1); cursor: default; }
+    @keyframes lb-scale { from { transform: scale(.88); } to { transform: scale(1); } }
+    #lb-close { position: fixed; top: 24px; right: 28px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); color: #fff; font-size: 20px; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .15s; line-height: 1; }
+    #lb-close:hover { background: rgba(255,255,255,.18); }
+
+    /* Features */
+    #features { padding: 90px 0; }
+    .features-hdr { text-align: center; margin-bottom: 56px; }
+    .feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .feat-card { background: var(--bg-card); border-radius: 20px; padding: 30px; border: 1px solid rgba(255,255,255,.05); position: relative; overflow: hidden; transition: border-color .2s, transform .2s; }
+    .feat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent, linear-gradient(90deg,var(--teal),var(--orange))); }
+    .feat-card:hover { border-color: rgba(78,205,196,.3); transform: translateY(-4px); }
+    .feat-icon { width: 48px; height: 48px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 18px; }
+    .feat-title { font-size: 17px; font-weight: 700; margin-bottom: 9px; }
+    .feat-desc { font-size: 13px; color: var(--sec); line-height: 1.7; }
+    .feat-tag { display: inline-block; margin-top: 14px; font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 20px; background: rgba(78,205,196,.1); color: var(--teal); }
+
+    /* Showcase */
+    #showcase { padding: 90px 0; }
+    .show-row { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; margin-bottom: 100px; }
+    .show-row:last-child { margin-bottom: 0; }
+    .show-row.flip { direction: rtl; }
+    .show-row.flip > * { direction: ltr; }
+    .show-img-wrap { display: flex; justify-content: center; }
+    .show-img { height: 460px; width: auto; filter: drop-shadow(0 30px 50px rgba(0,0,0,.65)); border-radius: 34px; }
+    .show-list { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 11px; }
+    .show-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--sec); line-height: 1.6; }
+    .chk { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 1px; }
+    .chk-o { background: rgba(232,132,90,.2); color: var(--orange); }
+    .chk-t { background: rgba(78,205,196,.2); color: var(--teal); }
+
+    /* Download CTA */
+    #download { padding: 90px 0; background: radial-gradient(ellipse at 50% 0%, rgba(78,205,196,.08) 0%, transparent 65%); border-top: 1px solid rgba(78,205,196,.08); }
+    .dl-inner { text-align: center; max-width: 580px; margin: 0 auto; }
+    .dl-badges { display: flex; gap: 14px; justify-content: center; margin-top: 36px; flex-wrap: wrap; }
+
+    /* Footer */
+    footer { padding: 44px 0 28px; border-top: 1px solid rgba(255,255,255,.05); }
+    .foot-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+    .foot-logo { font-size: 15px; font-weight: 700; color: var(--sec); }
+    .foot-links { display: flex; gap: 24px; list-style: none; }
+    .foot-links a { color: var(--muted); text-decoration: none; font-size: 12px; transition: color .2s; }
+    .foot-links a:hover { color: var(--sec); }
+    .foot-credit { font-size: 11px; color: var(--muted); text-align: right; }
+    .foot-credit a { color: var(--teal); text-decoration: none; }
+
+    /* Cookie banner */
+    #cookie-banner { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 9999; width: min(560px, calc(100vw - 32px)); background: #161827; border: 1px solid rgba(123,111,212,.25); border-radius: 18px; padding: 20px 24px; box-shadow: 0 8px 40px rgba(0,0,0,.6); display: flex; align-items: center; gap: 16px; flex-wrap: wrap; font-family: 'Outfit', sans-serif; animation: cb-in .3s ease; }
+    @keyframes cb-in { from { opacity:0; transform:translateX(-50%) translateY(16px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+    #cookie-banner.hide { animation: cb-out .25s ease forwards; }
+    @keyframes cb-out { to { opacity:0; transform:translateX(-50%) translateY(16px); } }
+    #cookie-banner p { font-size: 13px; color: #8B8FA8; line-height: 1.55; flex: 1; min-width: 200px; margin: 0; }
+    #cookie-banner a { color: #B8AAFF; text-decoration: none; }
+    .cb-btns { display: flex; gap: 10px; flex-shrink: 0; }
+    .cb-accept { background: linear-gradient(135deg,#7B6FD4,#8B7FE8); color: #fff; border: none; border-radius: 30px; padding: 9px 18px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif; transition: transform .15s; }
+    .cb-accept:hover { transform: translateY(-1px); }
+    .cb-decline { background: transparent; color: #8B8FA8; border: 1px solid rgba(255,255,255,.1); border-radius: 30px; padding: 9px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Outfit', sans-serif; transition: border-color .15s, color .15s; }
+    .cb-decline:hover { border-color: rgba(255,255,255,.25); color: #fff; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      nav { padding: 14px 22px; }
+      .nav-links { display: none; }
+      .nav-burger { display: flex; }
+      .wrap { padding: 0 22px; }
+      .hero-grid, .show-row { grid-template-columns: 1fr; text-align: center; gap: 36px; }
+      .show-row.flip { direction: ltr; }
+      .show-img-wrap, .hero-visual { order: -1; justify-content: center; }
+      .hero-ctas, .badge-wrap { justify-content: center; }
+      .feat-grid { grid-template-columns: 1fr; }
+      .foot-inner { flex-direction: column; align-items: center; }
+      .foot-credit { text-align: center; }
+      .sec-sub { max-width: 100%; }
+      .show-list li { text-align: left; }
+      .hero-img { height: 400px; }
+      .hero-img-wrap { transform: rotate(0deg) !important; animation: bob-mobile 5s ease-in-out infinite; }
+      @keyframes bob-mobile { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    }
+    @media (max-width: 480px) {
+      #cookie-banner { bottom: 16px; padding: 16px; }
+      .cb-btns { width: 100%; }
+      .cb-accept, .cb-decline { flex: 1; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Cookie consent banner -->
+<div id="cookie-banner" role="dialog" aria-label="Cookie preferences" style="display:none">
+  <p>We use cookies to improve your experience. Analytics help us understand how people find us. See our <a href="privacy.html">privacy policy</a>.</p>
+  <div class="cb-btns">
+    <button class="cb-decline" onclick="cookieChoice(false)">Essential only</button>
+    <button class="cb-accept" onclick="cookieChoice(true)">Accept analytics</button>
+  </div>
+</div>
+
+<div id="cosmos"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">
+    <div class="logo-icon"><img src="favicon.png" alt="The ADHD Studio" /></div>
+    The ADHD Studio
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#features">ADH Do It</a></li>
+    <li><a href="counta.html" class="active">Counta</a></li>
+    <li><a href="custom-adhd-apps.html">For Business</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="https://apps.apple.com/gb/app/counta-countdown-save/id6770090810" class="nav-pill" target="_blank" rel="noopener">Download Free</a></li>
+  </ul>
+  <button class="nav-burger" aria-label="Open menu" onclick="toggleMobileNav()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile nav drawer -->
+<div class="nav-mobile" id="nav-mobile">
+  <a href="index.html#features">ADH Do It</a>
+  <a href="counta.html" class="active" onclick="closeMobileNav()">Counta</a>
+  <a href="custom-adhd-apps.html">For Business</a>
+  <a href="about.html">About</a>
+  <a href="mailto:hello@timtomstudio.co.uk">Contact</a>
+  <a href="https://apps.apple.com/gb/app/counta-countdown-save/id6770090810" class="nav-pill" target="_blank" rel="noopener">Download Free</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">⏳ Free to download on iOS &amp; Android</div>
+        <h1 class="hero-title">Count down to what matters.<br/><span class="grad-o">Save to make it happen.</span></h1>
+        <p class="hero-sub">Counta helps you track the moments you're looking forward to — and builds you a simple savings plan to get there. Designed for ADHD brains that want to budget without the spreadsheet.</p>
+        <div class="hero-ctas badge-wrap">
+          <a href="https://apps.apple.com/gb/app/counta-countdown-save/id6770090810" class="badge-apple" target="_blank" rel="noopener">
+            <svg width="17" height="21" viewBox="0 0 17 21" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M14.29 11.08c-.02-2.27 1.86-3.37 1.94-3.42-1.06-1.55-2.71-1.76-3.3-1.78-1.4-.14-2.73.82-3.44.82-.72 0-1.83-.8-3.01-.78C4.9 5.95 3.46 6.9 2.69 8.36c-1.6 2.77-.41 6.87 1.15 9.12.77 1.1 1.67 2.33 2.87 2.28 1.15-.05 1.59-.74 2.98-.74 1.38 0 1.78.74 2.99.72 1.24-.02 2.02-1.11 2.77-2.22.88-1.27 1.24-2.51 1.26-2.57-.03-.01-2.41-.93-2.43-3.87zm-2.27-7.12C12.65 3.05 13.09 2 12.97.93c-.92.04-2.03.61-2.69 1.38-.59.68-1.1 1.77-.96 2.82 1.02.08 2.07-.52 2.7-1.17z"/></svg>
+            <div><span class="badge-label">Download on the</span><span class="badge-name">App Store</span></div>
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=com.timtomstudio.countdown&pcampaignid=web_share" class="badge-gplay" target="_blank" rel="noopener">
+            <svg width="20" height="22" viewBox="0 0 20 22" xmlns="http://www.w3.org/2000/svg"><path d="M1.22.36C.83.56.56.99.56 1.56v18.89c0 .57.27 1 .66 1.19l.08.05 10.58-10.58v-.25L1.3.31l-.08.05z" fill="#4285F4"/><path d="M15.41 14.7l-3.53-3.53v-.25l3.53-3.53.08.05 4.18 2.38c1.19.68 1.19 1.78 0 2.45l-4.18 2.38-.08.05z" fill="#FBBC04"/><path d="M15.49 14.65L11.88 11 1.22 21.64c.39.42 1.04.47 1.77.05l12.5-7.04" fill="#34A853"/><path d="M15.49 7.35L2.99.31C2.26-.11 1.61-.06 1.22.36L11.88 11l3.61-3.65z" fill="#EA4335"/></svg>
+            <div><span class="badge-label">GET IT ON</span><span class="badge-name">Google Play</span></div>
+          </a>
+        </div>
+        <p style="margin-top:16px;font-size:14px;color:var(--sec)"><span class="stars">★★★★★</span> &nbsp;Free to download</p>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-img-wrap">
+          <div class="hero-glow"></div>
+          <img class="hero-img" src="screenshots/counta/1_mockup.png" alt="Counta app — countdown and savings app on iPhone" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<section id="trust">
+  <div class="wrap">
+    <div class="trust-row">
+      <div class="trust-item">⏳ See every day count down</div>
+      <div class="trust-item">💰 Goal-based savings plans</div>
+      <div class="trust-item">🫙 Watch your pot fill up</div>
+      <div class="trust-item">🔔 Smart saving reminders</div>
+      <div class="trust-item">🆓 Free to download</div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENSHOT STRIP -->
+<section id="strip">
+  <div class="wrap strip-title">
+    <div class="sec-label" style="justify-content:center">Screenshots</div>
+    <h2 class="sec-title center">Everything you need,<br/><span class="grad-t">nothing you don't</span></h2>
+  </div>
+  <div class="strip-outer">
+    <div class="strip-scroll">
+      <img class="strip-img" src="screenshots/counta/1_mockup.png" alt="Counta app — countdown and savings app showing upcoming events organised as a list on iPhone" loading="lazy" />
+      <img class="strip-img" src="screenshots/counta/2_screen.png" alt="Counta countdown list — multiple countdowns to events like holidays, birthdays and bills, designed for ADHD time awareness" loading="lazy" />
+      <img class="strip-img" src="screenshots/counta/3_screen.png" alt="Counta savings plan setup — ADHD budgeting app asking how often you can save, weekly or monthly, to reach your goal" loading="lazy" />
+      <img class="strip-img" src="screenshots/counta/4_screen.png" alt="Counta savings pot — visual savings goal filling up as you save toward a target like a holiday, keeping ADHD users motivated" loading="lazy" />
+      <img class="strip-img" src="screenshots/counta/5_screen.png" alt="Counta plan view — savings progress and countdown tracker helping users with ADHD stay on top of financial goals" loading="lazy" />
+      <img class="strip-img" src="screenshots/counta/6_screen.png" alt="Counta onboarding — three-step setup turning savings chaos into clarity, built for ADHD brains that hate complicated budgeting" loading="lazy" />
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <div class="features-hdr">
+      <div class="sec-label" style="justify-content:center">What's inside</div>
+      <h2 class="sec-title center">Built for <span class="grad-t">the way you think</span></h2>
+      <p class="sec-sub center">No complicated budgeting. No guilt. Just set your goal, pick a saving frequency, and let Counta handle the rest.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card" style="--accent:linear-gradient(90deg,#4ECDC4,#44A39E)">
+        <div class="feat-icon" style="background:rgba(78,205,196,.15)">⏳</div>
+        <div class="feat-title">Count down to anything</div>
+        <div class="feat-desc">Rent due, Christmas, a holiday, a birthday. See exactly how many days you have left — at a glance, every time you open the app.</div>
+        <div class="feat-tag">Time made visible</div>
+      </div>
+      <div class="feat-card" style="--accent:linear-gradient(90deg,#FF6B9D,#c84a7a)">
+        <div class="feat-icon" style="background:rgba(255,107,157,.15)">💰</div>
+        <div class="feat-title">Build a savings plan</div>
+        <div class="feat-desc">Set your target, tell Counta how often you can save — weekly or monthly — and it calculates exactly what you need to put away each time to get there.</div>
+        <div class="feat-tag" style="background:rgba(255,107,157,.12);color:#FF6B9D">No spreadsheet needed</div>
+      </div>
+      <div class="feat-card" style="--accent:linear-gradient(90deg,var(--gold),var(--orange))">
+        <div class="feat-icon" style="background:rgba(255,204,0,.12)">🫙</div>
+        <div class="feat-title">Watch your pot fill up</div>
+        <div class="feat-desc">Your savings goal is visualised as a filling pot. Every time you save, you see it grow. The visual reward keeps you motivated in a way a spreadsheet never could.</div>
+        <div class="feat-tag" style="background:rgba(255,204,0,.1);color:var(--gold)">Dopamine on every save</div>
+      </div>
+      <div class="feat-card" style="--accent:linear-gradient(90deg,var(--purple),var(--focus))">
+        <div class="feat-icon" style="background:rgba(46,42,92,.7)">🔔</div>
+        <div class="feat-title">Smart saving reminders</div>
+        <div class="feat-desc">Counta notifies you on your chosen date each week or month — so saving becomes a habit, not an afterthought. It'll also flag if you're falling behind.</div>
+        <div class="feat-tag" style="background:rgba(123,111,212,.12);color:var(--glow)">Stays on track for you</div>
+      </div>
+      <div class="feat-card" style="--accent:linear-gradient(90deg,#4ECDC4,var(--purple))">
+        <div class="feat-icon" style="background:rgba(78,205,196,.1)">🎯</div>
+        <div class="feat-title">Chaos to clarity</div>
+        <div class="feat-desc">Set your goal, choose a frequency, let Counta handle the maths. Three steps to a working savings plan — designed for brains that hate admin.</div>
+        <div class="feat-tag">Built for ADHD</div>
+      </div>
+      <div class="feat-card" style="--accent:linear-gradient(90deg,var(--orange),#FF6B9D)">
+        <div class="feat-icon" style="background:rgba(232,132,90,.15)">🌴</div>
+        <div class="feat-title">Save for real moments</div>
+        <div class="feat-desc">Hawaii. Christmas. A new laptop. Rent. Counta is for savings goals you actually care about — the ones that motivate you to put money away.</div>
+        <div class="feat-tag" style="background:rgba(232,132,90,.1);color:var(--orange)">Goal-first savings</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE -->
+<section id="showcase">
+  <div class="wrap">
+
+    <!-- Savings plan -->
+    <div class="show-row">
+      <div>
+        <div class="sec-label">Savings Plans</div>
+        <h2 class="sec-title">From countdown<br/><span class="grad-o">to saving plan.</span></h2>
+        <p class="sec-sub">Most people know what they're saving for — they just don't know how to get there. Counta takes your goal, your deadline, and how often you want to save, and hands you back a simple number. That's all you need.</p>
+        <ul class="show-list">
+          <li><div class="chk chk-o">✓</div><span>Set a savings target and deadline in seconds</span></li>
+          <li><div class="chk chk-o">✓</div><span>Choose weekly or monthly — Counta does the maths</span></li>
+          <li><div class="chk chk-o">✓</div><span>We don't hold your money — you stay in full control</span></li>
+        </ul>
+      </div>
+      <div class="show-img-wrap">
+        <img class="show-img" src="screenshots/counta/3_screen.png" alt="Counta ADHD budgeting app — setting up a savings plan with weekly save amount calculated automatically" loading="lazy" style="border-radius:28px" />
+      </div>
+    </div>
+
+    <!-- Pot fills up -->
+    <div class="show-row flip">
+      <div>
+        <div class="sec-label">Visual Progress</div>
+        <h2 class="sec-title">Watch your pot<br/><span class="grad-o">fill up.</span></h2>
+        <p class="sec-sub">A number in a spreadsheet doesn't feel like progress. A filling pot does. Counta visualises your savings goal so you can see exactly how close you are — and feel that momentum every time you log a save.</p>
+        <ul class="show-list">
+          <li><div class="chk chk-t">✓</div><span>Visual savings pot fills as you add to your goal</span></li>
+          <li><div class="chk chk-t">✓</div><span>Celebrates with you as you hit milestones</span></li>
+          <li><div class="chk chk-t">✓</div><span>See saved vs remaining at a glance</span></li>
+        </ul>
+      </div>
+      <div class="show-img-wrap">
+        <img class="show-img" src="screenshots/counta/4_screen.png" alt="Counta savings pot filling up visually — gamified savings goal progress keeping ADHD users motivated to save consistently" loading="lazy" style="border-radius:28px" />
+      </div>
+    </div>
+
+    <!-- Countdown -->
+    <div class="show-row">
+      <div>
+        <div class="sec-label">Countdown</div>
+        <h2 class="sec-title">See every day<br/><span class="grad-t">counting down.</span></h2>
+        <p class="sec-sub">ADHD brains struggle to feel time passing — Counta makes it visible. Every event you're looking forward to has a live countdown, so you always know exactly where you stand.</p>
+        <ul class="show-list">
+          <li><div class="chk chk-t">✓</div><span>Add any event — holiday, birthday, deadline, payday</span></li>
+          <li><div class="chk chk-t">✓</div><span>See everything at a glance in one clean list</span></li>
+          <li><div class="chk chk-t">✓</div><span>Links directly to your savings plan for that event</span></li>
+        </ul>
+      </div>
+      <div class="show-img-wrap">
+        <img class="show-img" src="screenshots/counta/2_screen.png" alt="Counta countdown list — multiple events tracked with days remaining, designed for ADHD time awareness" loading="lazy" style="border-radius:28px" />
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- DOWNLOAD CTA -->
+<section id="download">
+  <div class="wrap">
+    <div class="dl-inner">
+      <div class="sec-label" style="justify-content:center">Download Free</div>
+      <h2 class="sec-title center">Start counting down.<br/>Start saving up.</h2>
+      <p class="sec-sub center">Counta is free to download on iOS and Android. Set your first goal in under a minute.</p>
+      <div class="dl-badges">
+        <a href="https://apps.apple.com/gb/app/counta-countdown-save/id6770090810" class="badge-apple" target="_blank" rel="noopener">
+          <svg width="17" height="21" viewBox="0 0 17 21" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M14.29 11.08c-.02-2.27 1.86-3.37 1.94-3.42-1.06-1.55-2.71-1.76-3.3-1.78-1.4-.14-2.73.82-3.44.82-.72 0-1.83-.8-3.01-.78C4.9 5.95 3.46 6.9 2.69 8.36c-1.6 2.77-.41 6.87 1.15 9.12.77 1.1 1.67 2.33 2.87 2.28 1.15-.05 1.59-.74 2.98-.74 1.38 0 1.78.74 2.99.72 1.24-.02 2.02-1.11 2.77-2.22.88-1.27 1.24-2.51 1.26-2.57-.03-.01-2.41-.93-2.43-3.87zm-2.27-7.12C12.65 3.05 13.09 2 12.97.93c-.92.04-2.03.61-2.69 1.38-.59.68-1.1 1.77-.96 2.82 1.02.08 2.07-.52 2.7-1.17z"/></svg>
+          <div><span class="badge-label">Download on the</span><span class="badge-name">App Store</span></div>
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=com.timtomstudio.countdown&pcampaignid=web_share" class="badge-gplay" target="_blank" rel="noopener">
+          <svg width="20" height="22" viewBox="0 0 20 22" xmlns="http://www.w3.org/2000/svg"><path d="M1.22.36C.83.56.56.99.56 1.56v18.89c0 .57.27 1 .66 1.19l.08.05 10.58-10.58v-.25L1.3.31l-.08.05z" fill="#4285F4"/><path d="M15.41 14.7l-3.53-3.53v-.25l3.53-3.53.08.05 4.18 2.38c1.19.68 1.19 1.78 0 2.45l-4.18 2.38-.08.05z" fill="#FBBC04"/><path d="M15.49 14.65L11.88 11 1.22 21.64c.39.42 1.04.47 1.77.05l12.5-7.04" fill="#34A853"/><path d="M15.49 7.35L2.99.31C2.26-.11 1.61-.06 1.22.36L11.88 11l3.61-3.65z" fill="#EA4335"/></svg>
+          <div><span class="badge-label">GET IT ON</span><span class="badge-name">Google Play</span></div>
+        </a>
+      </div>
+      <p style="margin-top:18px;font-size:14px;color:var(--sec)"><span class="stars">★★★★★</span> &nbsp;Free to download</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <div class="foot-logo" style="display:flex;align-items:center;gap:8px"><img src="favicon.png" alt="" style="width:22px;height:22px;border-radius:6px;object-fit:cover"> The ADHD Studio</div>
+      <ul class="foot-links">
+        <li><a href="index.html#features">ADH Do It</a></li>
+        <li><a href="counta.html">Counta</a></li>
+        <li><a href="custom-adhd-apps.html">For Business</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="mailto:hello@timtomstudio.co.uk">Contact</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="#" onclick="showCookieBanner();return false;">Cookie settings</a></li>
+      </ul>
+      <div class="foot-credit">
+        <a href="https://www.youtube.com/@The-ADHD-Studio" target="_blank" rel="noopener" aria-label="The ADHD Studio on YouTube" style="display:inline-flex;align-items:center;gap:7px;color:var(--sec);text-decoration:none;font-size:13px;font-weight:500;margin-bottom:10px;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--sec)'">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          YouTube
+        </a><br/>
+        Built by <a href="https://timtomstudio.co.uk" target="_blank">Tim Tom Studio</a><br/>
+        <span style="color:var(--muted)">© 2026 The ADHD Studio. All rights reserved.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div id="lightbox">
+  <span id="lb-close" title="Close">✕</span>
+  <img id="lb-img" src="" alt="" />
+</div>
+
+<script>
+(function() {
+  const cosmos = document.getElementById('cosmos');
+  const colours = ['rgba(255,255,255,1)','rgba(255,255,255,1)','rgba(255,255,255,1)','rgba(78,205,196,1)','rgba(255,204,0,1)','rgba(255,107,157,1)'];
+  for (let i = 0; i < 160; i++) {
+    const star = document.createElement('div');
+    const rand = Math.random();
+    let size, baseOp, maxOp, scaleAmt;
+    if (rand < 0.60)      { size = 1;   baseOp = 0.1;  maxOp = 0.55; scaleAmt = 1.2; }
+    else if (rand < 0.85) { size = 1.5; baseOp = 0.15; maxOp = 0.75; scaleAmt = 1.4; }
+    else if (rand < 0.96) { size = 2;   baseOp = 0.2;  maxOp = 0.9;  scaleAmt = 1.5; }
+    else                  { size = 3;   baseOp = 0.3;  maxOp = 1.0;  scaleAmt = 1.6; }
+    const speeds = ['twinkle-slow','twinkle-med','twinkle-fast'];
+    const speed  = speeds[Math.floor(Math.random() * speeds.length)];
+    const dur    = (Math.random() * 4 + 2).toFixed(1) + 's';
+    const delay  = (Math.random() * -8).toFixed(2) + 's';
+    const colour = colours[Math.floor(Math.random() * colours.length)];
+    star.className = `star ${speed}`;
+    star.style.cssText = `width:${size}px;height:${size}px;left:${(Math.random()*100).toFixed(2)}%;top:${(Math.random()*100).toFixed(2)}%;background:${colour};box-shadow:0 0 ${size*2}px ${colour};--d:${dur};--delay:${delay};--min-op:${baseOp};--max-op:${maxOp};--scale:${scaleAmt};opacity:${baseOp};`;
+    cosmos.appendChild(star);
+  }
+})();
+</script>
+
+<script>
+(function(){
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbClose = document.getElementById('lb-close');
+  document.querySelectorAll('.strip-img').forEach(img => {
+    img.addEventListener('click', () => { lbImg.src = img.src; lbImg.alt = img.alt; lb.classList.add('open'); document.body.style.overflow = 'hidden'; });
+  });
+  function close() { lb.classList.remove('open'); document.body.style.overflow = ''; }
+  lb.addEventListener('click', e => { if (e.target !== lbImg) close(); });
+  lbClose.addEventListener('click', close);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+})();
+</script>
+
+<script>
+(function() {
+  var GA_ID = 'G-XXXXXXXXXX';
+  var choice = localStorage.getItem('cookie_consent');
+  function loadGA() {
+    if (GA_ID === 'G-XXXXXXXXXX') return;
+    var s = document.createElement('script'); s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    window.gtag = gtag; gtag('js', new Date()); gtag('config', GA_ID, { anonymize_ip: true });
+  }
+  if (choice === 'accepted') { loadGA(); return; }
+  if (choice === 'declined') { return; }
+  document.addEventListener('DOMContentLoaded', function() {
+    var b = document.getElementById('cookie-banner');
+    if (b) b.style.display = 'flex';
+  });
+  window.cookieChoice = function(accepted) {
+    localStorage.setItem('cookie_consent', accepted ? 'accepted' : 'declined');
+    var b = document.getElementById('cookie-banner');
+    if (b) { b.classList.add('hide'); setTimeout(function(){ b.style.display = 'none'; }, 280); }
+    if (accepted) loadGA();
+  };
+  window.showCookieBanner = function() {
+    var b = document.getElementById('cookie-banner');
+    if (b) { b.classList.remove('hide'); b.style.display = 'flex'; }
+  };
+})();
+</script>
+
+<script>
+function toggleMobileNav() {
+  var drawer = document.getElementById('nav-mobile');
+  var burger = document.querySelector('.nav-burger');
+  var open = drawer.classList.toggle('open');
+  burger.classList.toggle('open', open);
+  burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+}
+function closeMobileNav() {
+  document.getElementById('nav-mobile').classList.remove('open');
+  var burger = document.querySelector('.nav-burger');
+  burger.classList.remove('open');
+  burger.setAttribute('aria-label', 'Open menu');
+}
+</script>
+
+</body>
+</html>
