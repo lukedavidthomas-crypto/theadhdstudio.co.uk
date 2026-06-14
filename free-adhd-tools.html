@@ -210,22 +210,37 @@
         .btn:active { transform: scale(.96); }
 
         .btn-primary {
-            background: var(--purple);
+            background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
             color: #fff;
-            font-size: .9375rem;
-            padding: 13px 26px;
+            font-size: 1rem;
+            padding: 15px 38px;
+            border-radius: var(--radius-full);
+            box-shadow: 0 4px 20px rgba(139,92,246,0.45), 0 1px 4px rgba(0,0,0,0.3);
+            letter-spacing: 0.01em;
+            transition: transform .15s, box-shadow .2s, opacity .15s;
         }
-        .btn-primary:hover { opacity: .9; }
-        .btn-primary.break-active { background: var(--green); }
+        .btn-primary:hover {
+            opacity: 1;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 28px rgba(139,92,246,0.55), 0 2px 6px rgba(0,0,0,0.3);
+        }
+        .btn-primary.break-active {
+            background: linear-gradient(135deg, #6ee7b7 0%, #059669 100%);
+            box-shadow: 0 4px 20px rgba(52,211,153,0.45), 0 1px 4px rgba(0,0,0,0.3);
+        }
 
         .btn-ghost {
-            background: var(--card);
+            background: rgba(255,255,255,0.06);
             color: var(--text-2);
-            font-size: .875rem;
-            padding: 12px 16px;
-            border: 1px solid var(--border);
+            font-size: .8125rem;
+            padding: 12px 18px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--radius-full);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: color .15s, background .15s, border-color .15s;
         }
-        .btn-ghost:hover { color: var(--text); background: var(--card-2); }
+        .btn-ghost:hover { color: var(--text); background: rgba(255,255,255,0.11); border-color: rgba(255,255,255,0.16); }
 
         /* ═══════════════════════════════════════
            TIMER PANEL
@@ -268,18 +283,31 @@
 
         .ring-bg {
             fill: none;
-            stroke: var(--card-2);
-            stroke-width: 12;
+            stroke: rgba(255,255,255,0.05);
+            stroke-width: 11;
         }
 
         .ring-progress {
             fill: none;
-            stroke: var(--purple);
+            stroke: url(#ringGrad) var(--purple);
             stroke-width: 12;
             stroke-linecap: round;
-            transition: stroke-dashoffset .6s linear, stroke .4s;
+            transition: stroke-dashoffset .7s cubic-bezier(0.4,0,0.2,1), stroke .4s;
+            filter: drop-shadow(0 0 10px rgba(139,92,246,0.65));
         }
-        .ring-progress.break-mode { stroke: var(--green); }
+        .ring-progress.break-mode {
+            stroke: url(#ringGradBreak) var(--green);
+            filter: drop-shadow(0 0 10px rgba(52,211,153,0.65));
+        }
+
+        .timer-ring-wrap::before {
+            content: '';
+            position: absolute;
+            inset: 22%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(139,92,246,0.09) 0%, transparent 70%);
+            pointer-events: none;
+        }
 
         .timer-center {
             position: absolute;
@@ -292,21 +320,30 @@
         }
 
         .timer-digits {
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: 800;
-            letter-spacing: -.04em;
+            letter-spacing: -.05em;
             line-height: 1;
             font-variant-numeric: tabular-nums;
         }
 
         .timer-label {
-            font-size: 0.75rem;
+            font-size: 0.625rem;
             font-weight: 700;
-            letter-spacing: .12em;
+            letter-spacing: .14em;
             text-transform: uppercase;
             color: var(--purple-light);
+            background: rgba(139,92,246,0.15);
+            border: 1px solid rgba(139,92,246,0.25);
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            margin-top: 2px;
         }
-        .timer-label.break-mode { color: var(--green); }
+        .timer-label.break-mode {
+            color: var(--green);
+            background: rgba(52,211,153,0.12);
+            border-color: rgba(52,211,153,0.25);
+        }
 
         .timer-controls {
             display: flex;
@@ -318,19 +355,38 @@
 
         .btn-row { display: flex; gap: 8px; }
 
-        .session-row { display: flex; align-items: center; gap: 8px; }
-        .session-label { font-size: .8rem; color: var(--muted); }
+        .session-row { display: flex; align-items: center; gap: 10px; }
+        .session-label { font-size: .75rem; color: var(--muted); letter-spacing: .04em; }
 
         .dot {
-            width: 9px; height: 9px;
+            width: 7px; height: 7px;
             border-radius: 50%;
-            background: var(--border-2);
-            transition: background .3s, box-shadow .3s;
+            background: rgba(255,255,255,0.1);
+            transition: background .4s, box-shadow .4s, transform .3s;
         }
-        .dot.done    { background: var(--purple); }
-        .dot.current { background: var(--purple-light); box-shadow: 0 0 8px var(--purple-glow); }
+        .dot.done { background: var(--purple); opacity: 0.7; }
+        .dot.current {
+            background: var(--purple-light);
+            box-shadow: 0 0 0 3px rgba(139,92,246,0.2), 0 0 12px rgba(139,92,246,0.5);
+            animation: dotPulse 2s ease-in-out infinite;
+        }
 
-        .timer-panel-right { display: flex; flex-direction: column; gap: 26px; }
+        @keyframes dotPulse {
+            0%, 100% { box-shadow: 0 0 0 3px rgba(139,92,246,0.2), 0 0 12px rgba(139,92,246,0.5); }
+            50%       { box-shadow: 0 0 0 5px rgba(139,92,246,0.1), 0 0 20px rgba(139,92,246,0.3); }
+        }
+
+        .timer-panel-right {
+            display: flex;
+            flex-direction: column;
+            gap: 26px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 28px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
 
         .panel-label {
             font-size: .8125rem;
@@ -341,22 +397,36 @@
             letter-spacing: .06em;
         }
 
-        .preset-row { display: flex; flex-wrap: wrap; gap: 8px; }
+        .preset-row {
+            display: flex;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 11px;
+            padding: 3px;
+            gap: 2px;
+        }
 
         .preset {
-            background: var(--card);
-            border: 1px solid var(--border);
+            flex: 1;
+            background: transparent;
+            border: none;
             color: var(--text-2);
             font-family: inherit;
-            font-size: .8125rem;
+            font-size: .75rem;
             font-weight: 600;
-            padding: 7px 15px;
-            border-radius: var(--radius-full);
+            padding: 7px 4px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all .15s;
+            text-align: center;
+            white-space: nowrap;
         }
-        .preset:hover  { border-color: var(--purple); color: var(--purple-light); }
-        .preset.active { background: var(--purple-dim); border-color: var(--purple); color: var(--purple-light); }
+        .preset:hover  { color: var(--text); background: rgba(255,255,255,0.07); }
+        .preset.active {
+            background: var(--purple);
+            color: #fff;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.35);
+        }
 
         .sound-grid {
             display: grid;
@@ -365,11 +435,11 @@
         }
 
         .sound-btn {
-            background: var(--card);
-            border: 1px solid var(--border);
-            color: var(--text);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: var(--text-2);
             font-family: inherit;
-            font-size: .875rem;
+            font-size: .8125rem;
             font-weight: 500;
             padding: 11px 14px;
             border-radius: var(--radius-sm);
@@ -377,10 +447,17 @@
             display: flex;
             align-items: center;
             gap: 9px;
-            transition: all .15s;
+            transition: all .18s;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
-        .sound-btn:hover  { border-color: var(--purple); background: var(--card-2); }
-        .sound-btn.active { background: var(--purple-dim); border-color: var(--purple); color: var(--purple-light); }
+        .sound-btn:hover  { border-color: rgba(139,92,246,0.45); background: rgba(139,92,246,0.08); color: var(--text); }
+        .sound-btn.active {
+            background: rgba(139,92,246,0.16);
+            border-color: rgba(139,92,246,0.5);
+            color: var(--purple-light);
+            box-shadow: inset 0 0 0 1px rgba(139,92,246,0.2);
+        }
         .sound-btn .s-icon { font-size: 1.1rem; width: 22px; text-align: center; flex-shrink: 0; }
 
         .volume-row { display: flex; align-items: center; gap: 12px; }
@@ -889,6 +966,16 @@
                     <div class="timer-ring-side">
                         <div class="timer-ring-wrap">
                             <svg class="timer-svg" viewBox="0 0 260 260" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="ringGrad" x1="1" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#c4b5fd"/>
+                                        <stop offset="100%" stop-color="#7c3aed"/>
+                                    </linearGradient>
+                                    <linearGradient id="ringGradBreak" x1="1" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#6ee7b7"/>
+                                        <stop offset="100%" stop-color="#059669"/>
+                                    </linearGradient>
+                                </defs>
                                 <circle class="ring-bg"       cx="130" cy="130" r="110"/>
                                 <circle class="ring-progress" cx="130" cy="130" r="110" id="ring"/>
                             </svg>
@@ -1314,13 +1401,20 @@ document.querySelectorAll('.sound-btn').forEach(b => {
 
 const volEl = document.getElementById('vol');
 const volPct = document.getElementById('vol-pct');
+
+function updateVolSlider() {
+    const pct = Math.round(vol * 100);
+    volEl.style.background = `linear-gradient(to right, #8b5cf6 ${pct}%, rgba(255,255,255,0.1) ${pct}%)`;
+    volPct.textContent = `${pct}%`;
+}
+
 volEl.value = Math.round(vol * 100);
-volPct.textContent = `${Math.round(vol * 100)}%`;
+updateVolSlider();
 volEl.addEventListener('input', () => {
     vol = volEl.value / 100;
-    volPct.textContent = `${volEl.value}%`;
     localStorage.setItem('adhd-vol', volEl.value);
     if (masterGain) masterGain.gain.value = vol;
+    updateVolSlider();
 });
 
 refreshTimer();
