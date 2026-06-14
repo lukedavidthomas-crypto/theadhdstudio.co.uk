@@ -45,8 +45,8 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --bg:            #0d0d14;
-            --surface:       #13131e;
+            --bg:            #0d0f1a;
+            --surface:       #131520;
             --card:          #18182a;
             --card-2:        #1e1e32;
             --border:        #28283f;
@@ -79,6 +79,40 @@
             line-height: 1.6;
             overflow: hidden;
         }
+
+        /* ── Cosmic background ── */
+        #cosmos { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+        #cosmos::before {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 20%, rgba(123,111,212,.07) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 70%, rgba(232,132,90,.05) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 60% at 50% 50%, rgba(139,127,232,.04) 0%, transparent 70%);
+        }
+        .star { position: absolute; border-radius: 50%; background: #fff; }
+        .star.twinkle-slow { animation: twinkle var(--d, 4s) ease-in-out infinite var(--delay, 0s); }
+        .star.twinkle-med  { animation: twinkle var(--d, 2.5s) ease-in-out infinite var(--delay, 0s); }
+        .star.twinkle-fast { animation: twinkle var(--d, 1.5s) ease-in-out infinite var(--delay, 0s); }
+        @keyframes twinkle {
+            0%, 100% { opacity: var(--min-op, 0.15); transform: scale(1); }
+            50%       { opacity: var(--max-op, 0.9);  transform: scale(var(--scale, 1.3)); }
+        }
+        .shoot {
+            position: absolute;
+            width: 120px; height: 1px;
+            background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.7), rgba(255,255,255,0));
+            animation: shoot var(--dur, 6s) linear infinite var(--delay, 2s);
+            opacity: 0;
+            transform-origin: left center;
+        }
+        @keyframes shoot {
+            0%   { opacity: 0; transform: translateX(0) rotate(var(--angle,-20deg)); }
+            2%   { opacity: 1; }
+            8%   { opacity: 0; transform: translateX(180px) rotate(var(--angle,-20deg)); }
+            100% { opacity: 0; transform: translateX(180px) rotate(var(--angle,-20deg)); }
+        }
+        @media (prefers-reduced-motion: reduce) { .star { opacity: .25 !important; } }
 
         /* ── Site header ── */
         .site-header {
@@ -176,6 +210,7 @@
             top: calc(var(--hdr) + var(--tabs));
             left: 0; right: 0; bottom: 0;
             overflow: hidden;
+            z-index: 1;
         }
 
         .panel {
@@ -922,6 +957,7 @@
 </head>
 <body>
 
+<div id="cosmos"></div>
 <canvas id="confetti"></canvas>
 <div id="toast"></div>
 
@@ -1140,6 +1176,50 @@
 
 <script>
 'use strict';
+
+/* ============================================================
+   COSMOS
+   ============================================================ */
+
+(function() {
+    const cosmos = document.getElementById('cosmos');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const colours = [
+        'rgba(255,255,255,1)',
+        'rgba(255,255,255,1)',
+        'rgba(255,255,255,1)',
+        'rgba(184,170,255,1)',
+        'rgba(255,204,0,1)',
+        'rgba(232,132,90,1)',
+    ];
+    for (let i = 0; i < 160; i++) {
+        const rand = Math.random();
+        let size, baseOp, maxOp, scaleAmt;
+        if      (rand < 0.60) { size = 1;   baseOp = 0.10; maxOp = 0.55; scaleAmt = 1.2; }
+        else if (rand < 0.85) { size = 1.5; baseOp = 0.15; maxOp = 0.75; scaleAmt = 1.4; }
+        else if (rand < 0.96) { size = 2;   baseOp = 0.20; maxOp = 0.90; scaleAmt = 1.5; }
+        else                  { size = 3;   baseOp = 0.30; maxOp = 1.00; scaleAmt = 1.6; }
+        const speeds = ['twinkle-slow','twinkle-med','twinkle-fast'];
+        const speed  = speeds[Math.floor(Math.random() * speeds.length)];
+        const dur    = (Math.random() * 4 + 2).toFixed(1) + 's';
+        const delay  = (Math.random() * -8).toFixed(2) + 's';
+        const colour = colours[Math.floor(Math.random() * colours.length)];
+        const star   = document.createElement('div');
+        star.className = `star ${speed}`;
+        star.style.cssText = `width:${size}px;height:${size}px;left:${(Math.random()*100).toFixed(2)}%;top:${(Math.random()*100).toFixed(2)}%;background:${colour};box-shadow:0 0 ${size*2}px ${colour};--d:${dur};--delay:${delay};--min-op:${baseOp};--max-op:${maxOp};--scale:${scaleAmt};opacity:${baseOp};`;
+        cosmos.appendChild(star);
+    }
+    if (!reducedMotion) {
+        [{ top:'12%', left:'15%', angle:-15, dur:12 },
+         { top:'35%', left:'60%', angle:-22, dur:19 },
+         { top:'65%', left:'30%', angle:-10, dur:26 }].forEach((s, i) => {
+            const el = document.createElement('div');
+            el.className = 'shoot';
+            el.style.cssText = `top:${s.top};left:${s.left};--angle:${s.angle}deg;--dur:${s.dur}s;--delay:${i*4+2}s;`;
+            cosmos.appendChild(el);
+        });
+    }
+})();
 
 /* ============================================================
    TABS
