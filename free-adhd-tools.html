@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free ADHD Tools: Focus Timer &amp; Task Planner | The ADHD Studio</title>
+    <meta name="description" content="Free browser-based ADHD tools: a Pomodoro focus timer with white noise, brown noise, rain and cosmic ambient sounds — plus a Quick Wins &amp; Quests task planner. No sign-up. No download needed.">
+    <meta name="keywords" content="free ADHD tools, ADHD Pomodoro timer, ADHD task planner, white noise ADHD, ambient noise focus, Quick Wins ADHD, ADHD productivity, free ADHD planner, focus timer ADHD, time blindness tools">
+    <link rel="canonical" href="https://theadhdstudio.co.uk/free-adhd-tools.html">
+    <meta property="og:title" content="Free ADHD Tools: Focus Timer &amp; Task Planner | The ADHD Studio">
+    <meta property="og:description" content="Pomodoro timer with ambient sounds + Quick Wins &amp; Quests task planner. Free, in your browser, built for ADHD brains. No sign-up needed.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://theadhdstudio.co.uk/free-adhd-tools.html">
+    <meta property="og:image" content="https://theadhdstudio.co.uk/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free ADHD Tools | The ADHD Studio">
+    <meta name="twitter:description" content="Pomodoro timer + ambient sounds + Quick Wins &amp; Quests — free, in your browser, built for ADHD brains.">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Free ADHD Tools: Focus Timer & Task Planner",
+        "description": "Free browser-based ADHD tools including a Pomodoro focus timer with ambient sounds and a Quick Wins & Quests task planner.",
+        "url": "https://theadhdstudio.co.uk/free-adhd-tools.html",
+        "publisher": {
+            "@type": "Organization",
+            "name": "The ADHD Studio",
+            "url": "https://theadhdstudio.co.uk"
+        }
+    }
+    </script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg:           #0d0d14;
+            --surface:      #13131e;
+            --card:         #18182a;
+            --card-2:       #1e1e32;
+            --border:       #28283f;
+            --border-2:     #32324d;
+            --purple:       #8b5cf6;
+            --purple-light: #a78bfa;
+            --purple-dim:   rgba(139,92,246,0.12);
+            --purple-glow:  rgba(139,92,246,0.35);
+            --green:        #34d399;
+            --green-dim:    rgba(52,211,153,0.12);
+            --gold:         #fbbf24;
+            --gold-2:       #f97316;
+            --red:          #f87171;
+            --text:         #e8e8f5;
+            --text-2:       #9898b8;
+            --muted:        #525270;
+            --radius:       14px;
+            --radius-sm:    8px;
+            --radius-full:  100px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ── Header ── */
+        .site-header {
+            border-bottom: 1px solid var(--border);
+            padding: 14px 0;
+            position: sticky;
+            top: 0;
+            background: rgba(13,13,20,0.96);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 50;
+        }
+
+        .header-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 0.9375rem;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -0.01em;
+        }
+        .logo em { color: var(--purple-light); font-style: normal; }
+
+        .header-nav { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+
+        .nav-link {
+            color: var(--text-2);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            transition: color .15s, background .15s;
+        }
+        .nav-link:hover { color: var(--text); background: var(--card); }
+
+        .btn-nav {
+            background: var(--purple);
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            transition: opacity .15s, transform .1s;
+        }
+        .btn-nav:hover { opacity: .9; transform: translateY(-1px); }
+
+        /* ── Layout ── */
+        main {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px 100px;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 56px 0;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            text-align: center;
+            padding: 64px 16px 40px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--purple-dim);
+            border: 1px solid rgba(139,92,246,.3);
+            color: var(--purple-light);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: var(--radius-full);
+            margin-bottom: 22px;
+            letter-spacing: .03em;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem,5vw,3.25rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -.03em;
+            margin-bottom: 14px;
+        }
+        .hero h1 span { color: var(--purple-light); }
+
+        .hero p {
+            font-size: 1rem;
+            color: var(--text-2);
+            max-width: 520px;
+            margin: 0 auto 28px;
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .pill {
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 5px 13px;
+            border-radius: var(--radius-full);
+        }
+
+        /* ── Section header ── */
+        .sec-head { margin-bottom: 28px; }
+        .sec-head h2 {
+            font-size: 1.375rem;
+            font-weight: 800;
+            letter-spacing: -.02em;
+            margin-bottom: 4px;
+        }
+        .sec-head p { font-size: 0.9375rem; color: var(--text-2); }
+
+        /* ── TIMER ── */
+        #timer-section {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        @media (max-width: 680px) {
+            #timer-section { grid-template-columns: 1fr; }
+        }
+
+        /* Circle */
+        .timer-ring-wrap {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin: 0 auto;
+        }
+
+        .timer-svg {
+            width: 220px;
+            height: 220px;
+            transform: rotate(-90deg);
+        }
+
+        .ring-bg {
+            fill: none;
+            stroke: var(--card-2);
+            stroke-width: 11;
+        }
+
+        .ring-progress {
+            fill: none;
+            stroke: var(--purple);
+            stroke-width: 11;
+            stroke-linecap: round;
+            transition: stroke-dashoffset .6s linear, stroke .4s;
+        }
+        .ring-progress.break-mode { stroke: var(--green); }
+
+        .timer-center {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+        }
+
+        .timer-digits {
+            font-size: 2.75rem;
+            font-weight: 800;
+            letter-spacing: -.04em;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timer-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--purple-light);
+        }
+        .timer-label.break-mode { color: var(--green); }
+
+        /* Buttons */
+        .timer-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .btn-row { display: flex; gap: 10px; }
+
+        .btn {
+            font-family: inherit;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: transform .1s, opacity .15s;
+            line-height: 1;
+        }
+        .btn:active { transform: scale(.96); }
+
+        .btn-primary {
+            background: var(--purple);
+            color: #fff;
+            font-size: .9375rem;
+            padding: 13px 30px;
+            min-width: 130px;
+        }
+        .btn-primary:hover { opacity: .9; }
+        .btn-primary.break-active { background: var(--green); }
+
+        .btn-ghost {
+            background: var(--card);
+            color: var(--text-2);
+            font-size: .875rem;
+            padding: 12px 18px;
+            border: 1px solid var(--border);
+        }
+        .btn-ghost:hover { color: var(--text); background: var(--card-2); }
+
+        /* Session dots */
+        .session-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .session-label { font-size: .8rem; color: var(--muted); }
+
+        .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--border-2);
+            transition: background .3s, box-shadow .3s;
+        }
+        .dot.done { background: var(--purple); }
+        .dot.current { background: var(--purple-light); box-shadow: 0 0 8px var(--purple-glow); }
+
+        /* Timer right panel */
+        .timer-panel { display: flex; flex-direction: column; gap: 26px; padding-top: 4px; }
+
+        .panel-label {
+            font-size: .8125rem;
+            font-weight: 600;
+            color: var(--text-2);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+        }
+
+        /* Duration presets */
+        .preset-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+        .preset {
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            font-family: inherit;
+            font-size: .8125rem;
+            font-weight: 600;
+            padding: 7px 15px;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: all .15s;
+        }
+        .preset:hover { border-color: var(--purple); color: var(--purple-light); }
+        .preset.active {
+            background: var(--purple-dim);
+            border-color: var(--purple);
+            color: var(--purple-light);
+        }
+
+        /* Sounds */
+        .sound-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .sound-btn {
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-family: inherit;
+            font-size: .875rem;
+            font-weight: 500;
+            padding: 11px 14px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            transition: all .15s;
+            text-align: left;
+        }
+        .sound-btn:hover { border-color: var(--purple); background: var(--card-2); }
+        .sound-btn.active {
+            background: var(--purple-dim);
+            border-color: var(--purple);
+            color: var(--purple-light);
+        }
+        .sound-btn .icon { font-size: 1.1rem; width: 22px; text-align: center; flex-shrink: 0; }
+
+        /* Volume */
+        .volume-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .vol-icon { font-size: 1rem; color: var(--text-2); }
+        .vol-pct { font-size: .8rem; font-weight: 600; color: var(--text-2); width: 34px; text-align: right; }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            flex: 1;
+            height: 4px;
+            background: var(--border-2);
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            background: var(--purple);
+            cursor: pointer;
+            box-shadow: 0 0 6px var(--purple-glow);
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            background: var(--purple);
+            border: none;
+            cursor: pointer;
+        }
+
+        /* ── TASKS ── */
+
+        /* XP Bar */
+        .xp-wrap {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .xp-level {
+            font-weight: 800;
+            font-size: .9375rem;
+            color: var(--gold);
+            white-space: nowrap;
+            min-width: 64px;
+        }
+
+        .xp-track {
+            flex: 1;
+            height: 7px;
+            background: var(--card-2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .xp-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold), var(--gold-2));
+            border-radius: 4px;
+            transition: width .5s cubic-bezier(.34,1.56,.64,1);
+            min-width: 0;
+        }
+
+        .xp-stat {
+            font-size: .8125rem;
+            font-weight: 600;
+            color: var(--text-2);
+            white-space: nowrap;
+        }
+
+        /* Columns */
+        .tasks-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 680px) {
+            .tasks-grid { grid-template-columns: 1fr; }
+        }
+
+        .col {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .col-head {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .col.qw .col-head { background: rgba(52,211,153,.04); }
+        .col.quest .col-head { background: rgba(139,92,246,.05); }
+
+        .col-icon { font-size: 1.125rem; }
+        .col-title { font-size: .9375rem; font-weight: 700; flex: 1; }
+
+        .col-badge {
+            font-size: .75rem;
+            font-weight: 700;
+            color: var(--muted);
+            background: var(--card-2);
+            border: 1px solid var(--border);
+            padding: 2px 10px;
+            border-radius: var(--radius-full);
+        }
+
+        /* Input row */
+        .add-row {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 8px;
+        }
+
+        .task-input {
+            flex: 1;
+            background: var(--card-2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-family: inherit;
+            font-size: .875rem;
+            padding: 9px 13px;
+            border-radius: var(--radius-sm);
+            outline: none;
+            transition: border-color .2s;
+        }
+        .task-input::placeholder { color: var(--muted); }
+        .task-input:focus { border-color: var(--purple); }
+
+        .add-btn {
+            font-family: inherit;
+            font-size: 1.125rem;
+            font-weight: 700;
+            padding: 9px 16px;
+            border-radius: var(--radius-sm);
+            border: none;
+            cursor: pointer;
+            transition: opacity .15s, transform .1s;
+            line-height: 1;
+            color: #fff;
+        }
+        .add-btn:active { transform: scale(.94); }
+        .col.qw .add-btn { background: var(--green); }
+        .col.quest .add-btn { background: var(--purple); }
+        .add-btn:hover { opacity: .9; }
+
+        /* Task list */
+        .task-list {
+            flex: 1;
+            padding: 6px 8px 10px;
+            min-height: 140px;
+            max-height: 380px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border) transparent;
+        }
+
+        .empty-msg {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 32px 20px;
+            text-align: center;
+            color: var(--muted);
+            font-size: .875rem;
+        }
+        .empty-msg span:first-child { font-size: 1.75rem; opacity: .45; }
+
+        /* Task item */
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 9px 8px;
+            border-radius: var(--radius-sm);
+            transition: background .12s;
+            position: relative;
+        }
+        .task-item:hover { background: var(--card-2); }
+
+        .check-btn {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--border-2);
+            background: transparent;
+            cursor: pointer;
+            transition: all .18s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+        .col.qw .check-btn:hover { border-color: var(--green); background: var(--green-dim); }
+        .col.quest .check-btn:hover { border-color: var(--purple); background: var(--purple-dim); }
+
+        .check-btn.done {
+            background: var(--green);
+            border-color: var(--green);
+            animation: pop .28s ease;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0); }
+            65% { transform: scale(1.35); }
+            100% { transform: scale(1); }
+        }
+
+        .check-tick {
+            color: #fff;
+            font-size: 10px;
+            font-weight: 900;
+            opacity: 0;
+            transition: opacity .1s;
+        }
+        .check-btn.done .check-tick { opacity: 1; }
+
+        .task-text {
+            flex: 1;
+            font-size: .9rem;
+            line-height: 1.45;
+            padding-top: 1px;
+            word-break: break-word;
+        }
+        .task-item.striking .task-text {
+            text-decoration: line-through;
+            color: var(--muted);
+        }
+
+        .del-btn {
+            opacity: 0;
+            flex-shrink: 0;
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            cursor: pointer;
+            font-size: .875rem;
+            padding: 2px 3px;
+            transition: opacity .12s, color .12s;
+            line-height: 1;
+            margin-top: 2px;
+        }
+        .task-item:hover .del-btn { opacity: 1; }
+        .del-btn:hover { color: var(--red); }
+
+        /* XP popup */
+        .xp-pop {
+            position: fixed;
+            pointer-events: none;
+            font-size: .875rem;
+            font-weight: 800;
+            color: var(--gold);
+            text-shadow: 0 1px 6px rgba(0,0,0,.5);
+            z-index: 900;
+            animation: floatUp 1.1s ease-out forwards;
+        }
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            20% { transform: translateY(-8px) scale(1.1); }
+            100% { opacity: 0; transform: translateY(-60px) scale(.9); }
+        }
+
+        /* ── Toast ── */
+        #toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: var(--card-2);
+            border: 1px solid var(--border-2);
+            color: var(--text);
+            font-size: .9rem;
+            font-weight: 600;
+            padding: 11px 22px;
+            border-radius: var(--radius-full);
+            z-index: 1000;
+            transition: transform .35s cubic-bezier(.34,1.56,.64,1);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        #toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* ── Confetti ── */
+        #confetti {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* ── CTA ── */
+        .cta-block {
+            text-align: center;
+            background: linear-gradient(135deg, var(--card), var(--card-2));
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 52px 32px;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-block::before {
+            content: '';
+            position: absolute;
+            width: 350px; height: 350px;
+            border-radius: 50%;
+            background: var(--purple-dim);
+            top: -120px; right: -120px;
+            pointer-events: none;
+        }
+        .cta-block h2 {
+            font-size: clamp(1.375rem,3vw,2rem);
+            font-weight: 800;
+            letter-spacing: -.02em;
+            margin-bottom: 10px;
+        }
+        .cta-block p {
+            color: var(--text-2);
+            margin-bottom: 28px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        .btn-cta {
+            display: inline-block;
+            background: var(--purple);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: .9375rem;
+            padding: 14px 28px;
+            border-radius: var(--radius-sm);
+            transition: opacity .15s, transform .1s;
+        }
+        .btn-cta:hover { opacity: .9; transform: translateY(-2px); }
+
+        .btn-outline-cta {
+            display: inline-block;
+            background: transparent;
+            color: var(--text-2);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: .9375rem;
+            padding: 13px 24px;
+            border: 1px solid var(--border-2);
+            border-radius: var(--radius-sm);
+            transition: color .15s, border-color .15s;
+        }
+        .btn-outline-cta:hover { color: var(--text); border-color: var(--text-2); }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 1px solid var(--border);
+            margin-top: 80px;
+            padding: 28px 24px;
+            text-align: center;
+            color: var(--muted);
+            font-size: .875rem;
+        }
+        footer a { color: var(--text-2); text-decoration: none; }
+        footer a:hover { color: var(--text); }
+        footer .sep { margin: 0 8px; opacity: .4; }
+
+        /* ── Misc ── */
+        @media (max-width: 480px) {
+            .header-nav .nav-link:not(:last-child) { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+<div id="toast"></div>
+
+<!-- HEADER -->
+<header class="site-header">
+    <div class="header-inner">
+        <a href="/" class="logo">The <em>ADHD</em> Studio</a>
+        <nav class="header-nav">
+            <a href="/" class="nav-link">← Home</a>
+            <a href="/counta.html" class="nav-link">Counta</a>
+            <a href="/about.html" class="nav-link">About</a>
+            <a href="/#download" class="btn-nav">⚡ Get ADH Do It</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="badge">🆓 Free — no account needed</div>
+        <h1>Free <span>ADHD Tools</span></h1>
+        <p>A Pomodoro focus timer with ambient sounds and a Quick Wins &amp; Quests task system — built for ADHD brains, right in your browser. Nothing to install.</p>
+        <div class="pill-row">
+            <span class="pill">⏱ Pomodoro Timer</span>
+            <span class="pill">🔊 Ambient Sounds</span>
+            <span class="pill">⚡ Quick Wins</span>
+            <span class="pill">🗺️ Quests</span>
+            <span class="pill">🏆 XP &amp; Levels</span>
+            <span class="pill">💾 Saves automatically</span>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- TIMER -->
+    <section id="timer-section" aria-label="Pomodoro Focus Timer">
+        <!-- Circle -->
+        <div>
+            <div class="timer-ring-wrap">
+                <svg class="timer-svg" viewBox="0 0 220 220" aria-hidden="true">
+                    <circle class="ring-bg" cx="110" cy="110" r="95"/>
+                    <circle class="ring-progress" id="ring" cx="110" cy="110" r="95"/>
+                </svg>
+                <div class="timer-center">
+                    <div class="timer-digits" id="digits">25:00</div>
+                    <div class="timer-label" id="mode-label">FOCUS</div>
+                </div>
+            </div>
+
+            <div class="timer-controls">
+                <div class="btn-row">
+                    <button class="btn btn-primary" id="start-btn" aria-label="Start timer">▶ Start</button>
+                    <button class="btn btn-ghost" id="reset-btn" aria-label="Reset timer">Reset</button>
+                </div>
+                <div class="session-row">
+                    <span class="session-label">Session</span>
+                    <div class="dot current" data-i="0"></div>
+                    <div class="dot" data-i="1"></div>
+                    <div class="dot" data-i="2"></div>
+                    <div class="dot" data-i="3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel -->
+        <div class="timer-panel">
+            <div class="sec-head">
+                <h2>⏱ Pomodoro Focus Timer</h2>
+                <p>Work in focused sprints. The brain performs best in short, intentional bursts — not marathon sessions.</p>
+            </div>
+
+            <div>
+                <div class="panel-label">Duration</div>
+                <div class="preset-row">
+                    <button class="preset active" data-w="25" data-b="5">25 / 5 min</button>
+                    <button class="preset" data-w="50" data-b="10">50 / 10 min</button>
+                    <button class="preset" data-w="15" data-b="3">15 / 3 min</button>
+                    <button class="preset" data-w="45" data-b="15">45 / 15 min</button>
+                </div>
+            </div>
+
+            <div>
+                <div class="panel-label">🔊 Ambient Sound</div>
+                <div class="sound-grid">
+                    <button class="sound-btn" data-snd="white" aria-pressed="false">
+                        <span class="icon">🌫</span> White Noise
+                    </button>
+                    <button class="sound-btn" data-snd="brown" aria-pressed="false">
+                        <span class="icon">🌊</span> Brown Noise
+                    </button>
+                    <button class="sound-btn" data-snd="rain" aria-pressed="false">
+                        <span class="icon">🌧️</span> Rain
+                    </button>
+                    <button class="sound-btn" data-snd="cosmic" aria-pressed="false">
+                        <span class="icon">✨</span> Cosmic
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <div class="panel-label">Volume</div>
+                <div class="volume-row">
+                    <span class="vol-icon">🔈</span>
+                    <input type="range" id="vol" min="0" max="100" value="50" aria-label="Volume">
+                    <span class="vol-pct" id="vol-pct">50%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- TASKS -->
+    <section aria-label="Task Planner">
+        <div class="sec-head">
+            <h2>✅ Quick Wins &amp; Quests</h2>
+            <p>Quick Wins are tasks you can knock out fast. Quests are your bigger goals. Complete them to earn XP.</p>
+        </div>
+
+        <!-- XP Bar -->
+        <div class="xp-wrap" aria-label="XP progress">
+            <div class="xp-level" id="xp-level">Level 1</div>
+            <div class="xp-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div class="xp-bar" id="xp-bar" style="width:0%"></div>
+            </div>
+            <div class="xp-stat" id="xp-stat">0 XP total</div>
+        </div>
+
+        <div class="tasks-grid">
+            <!-- Quick Wins -->
+            <div class="col qw">
+                <div class="col-head">
+                    <span class="col-icon">⚡</span>
+                    <span class="col-title">Quick Wins</span>
+                    <span class="col-badge" id="qw-ct">0</span>
+                </div>
+                <div class="add-row">
+                    <input class="task-input" id="qw-in" type="text" placeholder="Add a quick task… (under 15 min)" maxlength="120" aria-label="New Quick Win">
+                    <button class="add-btn" onclick="addTask('qw')" aria-label="Add Quick Win">+</button>
+                </div>
+                <div class="task-list" id="qw-list" role="list">
+                    <div class="empty-msg" id="qw-empty">
+                        <span>⚡</span>
+                        <span>Quick Wins are small tasks you can knock out fast. What can you tick off in under 15 minutes?</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quests -->
+            <div class="col quest">
+                <div class="col-head">
+                    <span class="col-icon">🗺️</span>
+                    <span class="col-title">Quests</span>
+                    <span class="col-badge" id="q-ct">0</span>
+                </div>
+                <div class="add-row">
+                    <input class="task-input" id="q-in" type="text" placeholder="Add a bigger goal…" maxlength="120" aria-label="New Quest">
+                    <button class="add-btn" onclick="addTask('q')" aria-label="Add Quest">+</button>
+                </div>
+                <div class="task-list" id="q-list" role="list">
+                    <div class="empty-msg" id="q-empty">
+                        <span>🗺️</span>
+                        <span>Quests are your bigger goals. Break them down later — for now, just get them out of your head.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CTA -->
+    <section class="cta-block" id="download">
+        <h2>Like these tools? ADH Do It goes much further.</h2>
+        <p>Brain Dump AI, Focus Zone, Weekly Wrapped, XP streaks, achievement shields, and more. Built by an ADHD team. Free to download.</p>
+        <div class="cta-btns">
+            <a href="/#download" class="btn-cta">⚡ Download ADH Do It — Free</a>
+            <a href="/about.html" class="btn-outline-cta">Meet the team →</a>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>
+        <a href="/">The ADHD Studio</a>
+        <span class="sep">·</span>
+        <a href="/counta.html">Counta</a>
+        <span class="sep">·</span>
+        <a href="/custom-adhd-apps.html">For Business</a>
+        <span class="sep">·</span>
+        <a href="/privacy.html">Privacy</a>
+        <span class="sep">·</span>
+        Built by neurodivergent developers, for neurodivergent brains.
+    </p>
+</footer>
+
+<script>
+'use strict';
+
+/* ============================================================
+   AUDIO ENGINE
+   ============================================================ */
+
+let audioCtx = null;
+let masterGain = null;
+let soundNodes = [];
+let activeSound = null;
+let vol = 0.5;
+
+function ctx() {
+    if (!audioCtx || audioCtx.state === 'closed') {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    return audioCtx;
+}
+
+function stopSound() {
+    soundNodes.forEach(n => { try { n.stop?.(); n.disconnect?.(); } catch(_) {} });
+    soundNodes = [];
+    if (masterGain) { try { masterGain.disconnect(); } catch(_) {} masterGain = null; }
+    activeSound = null;
+    document.querySelectorAll('.sound-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+    });
+}
+
+function playSound(type) {
+    if (activeSound === type) { stopSound(); return; }
+    stopSound();
+
+    const ac = ctx();
+    masterGain = ac.createGain();
+    masterGain.gain.value = vol;
+    masterGain.connect(ac.destination);
+
+    if (type === 'white') {
+        const src = makeWhite(ac);
+        src.connect(masterGain);
+        src.start();
+        soundNodes = [src];
+
+    } else if (type === 'brown') {
+        const src = makeBrown(ac);
+        src.connect(masterGain);
+        src.start();
+        soundNodes = [src];
+
+    } else if (type === 'rain') {
+        // Rain = HP-filtered white + brown rumble beneath
+        const white = makeWhite(ac);
+        const hp = ac.createBiquadFilter();
+        hp.type = 'highpass';
+        hp.frequency.value = 800;
+        hp.Q.value = 0.7;
+        const bp = ac.createBiquadFilter();
+        bp.type = 'bandpass';
+        bp.frequency.value = 3500;
+        bp.Q.value = 0.5;
+        white.connect(hp); hp.connect(bp); bp.connect(masterGain);
+        white.start();
+
+        const rumble = makeBrown(ac);
+        const rg = ac.createGain(); rg.gain.value = 0.25;
+        rumble.connect(rg); rg.connect(masterGain);
+        rumble.start();
+
+        soundNodes = [white, rumble, hp, bp, rg];
+
+    } else if (type === 'cosmic') {
+        // LP-filtered brown + slow LFO tremolo + two drone tones
+        const brown = makeBrown(ac);
+        const lp = ac.createBiquadFilter();
+        lp.type = 'lowpass'; lp.frequency.value = 380; lp.Q.value = 1.2;
+
+        const modGain = ac.createGain(); modGain.gain.value = 0.7;
+        const lfo = ac.createOscillator();
+        const lfoGain = ac.createGain();
+        lfo.type = 'sine'; lfo.frequency.value = 0.06;
+        lfoGain.gain.value = 0.28;
+        lfo.connect(lfoGain); lfoGain.connect(modGain.gain);
+        lfo.start();
+
+        brown.connect(lp); lp.connect(modGain); modGain.connect(masterGain);
+        brown.start();
+
+        const drone = (freq, gain) => {
+            const o = ac.createOscillator();
+            const g = ac.createGain(); g.gain.value = gain;
+            o.type = 'sine'; o.frequency.value = freq;
+            o.connect(g); g.connect(masterGain); o.start();
+            return [o, g];
+        };
+        const [d1, d1g] = drone(40, 0.14);
+        const [d2, d2g] = drone(60, 0.07);
+
+        soundNodes = [brown, lfo, d1, d2, lp, lfoGain, modGain, d1g, d2g];
+    }
+
+    activeSound = type;
+    const btn = document.querySelector(`[data-snd="${type}"]`);
+    if (btn) { btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true'); }
+}
+
+function makeWhite(ac) {
+    const len = ac.sampleRate * 4;
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let c = 0; c < 2; c++) {
+        const d = buf.getChannelData(c);
+        for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    }
+    const src = ac.createBufferSource(); src.buffer = buf; src.loop = true;
+    return src;
+}
+
+function makeBrown(ac) {
+    const len = ac.sampleRate * 4;
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let c = 0; c < 2; c++) {
+        const d = buf.getChannelData(c);
+        let last = 0;
+        for (let i = 0; i < len; i++) {
+            const w = Math.random() * 2 - 1;
+            d[i] = (last + 0.02 * w) / 1.02;
+            last = d[i];
+            d[i] *= 3.5;
+        }
+    }
+    const src = ac.createBufferSource(); src.buffer = buf; src.loop = true;
+    return src;
+}
+
+/* ============================================================
+   TIMER
+   ============================================================ */
+
+const CIRC = 2 * Math.PI * 95; // ~596.9
+
+const ring = document.getElementById('ring');
+const digits = document.getElementById('digits');
+const modeLabel = document.getElementById('mode-label');
+const startBtn = document.getElementById('start-btn');
+const resetBtn = document.getElementById('reset-btn');
+
+ring.style.strokeDasharray = CIRC;
+ring.style.strokeDashoffset = '0';
+
+let workMin = 25, breakMin = 5;
+let totalSec = workMin * 60;
+let remSec = totalSec;
+let running = false;
+let onBreak = false;
+let sessCount = 0;
+let ticker = null;
+
+function fmt(s) {
+    return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+}
+
+function refreshTimer() {
+    digits.textContent = fmt(remSec);
+    ring.style.strokeDashoffset = CIRC * (1 - remSec / totalSec);
+    document.title = `${fmt(remSec)} · ${onBreak ? 'Break' : 'Focus'} — ADHD Tools`;
+}
+
+function startTimer() {
+    if (running) return;
+    running = true;
+    startBtn.textContent = '⏸ Pause';
+    startBtn.classList.toggle('break-active', onBreak);
+    ticker = setInterval(() => {
+        remSec--;
+        refreshTimer();
+        if (remSec <= 0) { clearInterval(ticker); running = false; sessionDone(); }
+    }, 1000);
+}
+
+function pauseTimer() {
+    clearInterval(ticker); running = false;
+    startBtn.textContent = '▶ Resume';
+}
+
+function resetTimer() {
+    clearInterval(ticker); running = false; onBreak = false;
+    totalSec = workMin * 60; remSec = totalSec;
+    refreshTimer();
+    startBtn.textContent = '▶ Start';
+    startBtn.classList.remove('break-active');
+    modeLabel.textContent = 'FOCUS';
+    modeLabel.className = 'timer-label';
+    ring.className = 'ring-progress';
+    document.title = 'Free ADHD Tools | The ADHD Studio';
+}
+
+function sessionDone() {
+    chime(!onBreak);
+    if (!onBreak) {
+        sessCount++;
+        refreshDots();
+        const long = sessCount >= 4;
+        if (long) sessCount = 0;
+        onBreak = true;
+        totalSec = (long ? 15 : breakMin) * 60;
+        toast(long ? '🎉 Long break — 15 mins. You earned it!' : `⏸ Break time! ${breakMin} minutes.`);
+    } else {
+        onBreak = false;
+        totalSec = workMin * 60;
+        toast('⚡ Break over — back to focus!');
+    }
+    remSec = totalSec;
+    refreshTimer();
+    startBtn.textContent = '▶ Start';
+    startBtn.classList.toggle('break-active', onBreak);
+    modeLabel.textContent = onBreak ? 'BREAK' : 'FOCUS';
+    modeLabel.className = `timer-label${onBreak ? ' break-mode' : ''}`;
+    ring.className = `ring-progress${onBreak ? ' break-mode' : ''}`;
+}
+
+function chime(isEnd) {
+    try {
+        const ac = ctx();
+        const notes = isEnd ? [523, 659, 784] : [784, 659, 523];
+        notes.forEach((freq, i) => {
+            const o = ac.createOscillator();
+            const g = ac.createGain();
+            const t = ac.currentTime + i * 0.22;
+            o.type = 'sine'; o.frequency.value = freq;
+            g.gain.setValueAtTime(0, t);
+            g.gain.linearRampToValueAtTime(0.28, t + 0.04);
+            g.gain.exponentialRampToValueAtTime(0.001, t + 0.55);
+            o.connect(g); g.connect(ac.destination);
+            o.start(t); o.stop(t + 0.56);
+        });
+    } catch(_) {}
+}
+
+function refreshDots() {
+    document.querySelectorAll('.dot').forEach((d, i) => {
+        d.className = 'dot';
+        if (i < sessCount) d.classList.add('done');
+        else if (i === sessCount) d.classList.add('current');
+    });
+}
+
+startBtn.addEventListener('click', () => { running ? pauseTimer() : startTimer(); });
+resetBtn.addEventListener('click', resetTimer);
+
+document.querySelectorAll('.preset').forEach(p => {
+    p.addEventListener('click', () => {
+        if (running) return;
+        document.querySelectorAll('.preset').forEach(b => b.classList.remove('active'));
+        p.classList.add('active');
+        workMin = +p.dataset.w; breakMin = +p.dataset.b;
+        resetTimer();
+    });
+});
+
+document.querySelectorAll('.sound-btn').forEach(b => {
+    b.addEventListener('click', () => playSound(b.dataset.snd));
+});
+
+const volEl = document.getElementById('vol');
+const volPct = document.getElementById('vol-pct');
+volEl.addEventListener('input', () => {
+    vol = volEl.value / 100;
+    volPct.textContent = `${volEl.value}%`;
+    if (masterGain) masterGain.gain.value = vol;
+});
+
+refreshTimer();
+
+/* ============================================================
+   XP
+   ============================================================ */
+
+const XP_QW = 15;
+const XP_Q  = 30;
+const XP_PER_LEVEL = 100;
+
+let xp = parseInt(localStorage.getItem('adhd-xp') || '0', 10);
+
+function saveXP() { localStorage.setItem('adhd-xp', xp); }
+
+function refreshXP() {
+    const level = Math.floor(xp / XP_PER_LEVEL) + 1;
+    const inLevel = xp % XP_PER_LEVEL;
+    const pct = (inLevel / XP_PER_LEVEL) * 100;
+    document.getElementById('xp-level').textContent = `Level ${level}`;
+    document.getElementById('xp-bar').style.width = `${pct}%`;
+    document.getElementById('xp-bar').closest('[role=progressbar]').setAttribute('aria-valuenow', pct);
+    document.getElementById('xp-stat').textContent = `${xp} XP total`;
+}
+
+function gainXP(amount, x, y) {
+    xp += amount; saveXP(); refreshXP();
+    const el = document.createElement('div');
+    el.className = 'xp-pop';
+    el.textContent = `+${amount} XP`;
+    el.style.cssText = `left:${x}px;top:${y}px`;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1200);
+}
+
+refreshXP();
+
+/* ============================================================
+   TASKS
+   ============================================================ */
+
+let qwTasks = JSON.parse(localStorage.getItem('adhd-qw') || '[]');
+let qTasks  = JSON.parse(localStorage.getItem('adhd-q')  || '[]');
+
+function save() {
+    localStorage.setItem('adhd-qw', JSON.stringify(qwTasks));
+    localStorage.setItem('adhd-q',  JSON.stringify(qTasks));
+}
+
+function addTask(col) {
+    const inp = document.getElementById(col === 'qw' ? 'qw-in' : 'q-in');
+    const txt = inp.value.trim();
+    if (!txt) { inp.focus(); return; }
+    const task = { id: Date.now(), text: txt };
+    if (col === 'qw') qwTasks.push(task); else qTasks.push(task);
+    save(); render(); inp.value = ''; inp.focus();
+}
+
+function delTask(col, id) {
+    if (col === 'qw') qwTasks = qwTasks.filter(t => t.id !== id);
+    else qTasks = qTasks.filter(t => t.id !== id);
+    save(); render();
+}
+
+function completeTask(col, id, itemEl) {
+    if (itemEl.classList.contains('striking')) return;
+    const btn = itemEl.querySelector('.check-btn');
+    btn.classList.add('done');
+    itemEl.classList.add('striking');
+
+    const rect = itemEl.getBoundingClientRect();
+    const cx = rect.right - 20;
+    const cy = rect.top + rect.height / 2 + window.scrollY - 24;
+    const amount = col === 'qw' ? XP_QW : XP_Q;
+    gainXP(amount, cx, cy);
+    burst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+
+    setTimeout(() => {
+        if (col === 'qw') qwTasks = qwTasks.filter(t => t.id !== id);
+        else qTasks = qTasks.filter(t => t.id !== id);
+        save(); render();
+    }, 650);
+}
+
+function esc(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function makeItem(col, task) {
+    const div = document.createElement('div');
+    div.className = 'task-item';
+    div.dataset.id = task.id;
+    div.setAttribute('role','listitem');
+    div.innerHTML = `
+        <button class="check-btn" aria-label="Complete task" onclick="completeTask('${col}',${task.id},this.closest('.task-item'))">
+            <span class="check-tick">✓</span>
+        </button>
+        <span class="task-text">${esc(task.text)}</span>
+        <button class="del-btn" aria-label="Delete task" onclick="delTask('${col}',${task.id})">✕</button>
+    `;
+    return div;
+}
+
+function render() {
+    (['qw','q']).forEach(col => {
+        const tasks = col === 'qw' ? qwTasks : qTasks;
+        const list  = document.getElementById(`${col}-list`);
+        const empty = document.getElementById(`${col}-empty`);
+        const ct    = document.getElementById(`${col}-ct`);
+
+        ct.textContent = tasks.length;
+        empty.style.display = tasks.length ? 'none' : '';
+
+        // Remove old items (not the empty-msg)
+        Array.from(list.children).forEach(c => { if (c !== empty) c.remove(); });
+        tasks.forEach(t => list.appendChild(makeItem(col, t)));
+    });
+}
+
+document.getElementById('qw-in').addEventListener('keydown', e => { if (e.key === 'Enter') addTask('qw'); });
+document.getElementById('q-in').addEventListener('keydown', e => { if (e.key === 'Enter') addTask('q'); });
+
+render();
+
+/* ============================================================
+   CONFETTI
+   ============================================================ */
+
+const cvs = document.getElementById('confetti');
+const ctx2 = cvs.getContext('2d');
+let particles = [];
+let rafId = null;
+
+function resize() { cvs.width = innerWidth; cvs.height = innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+
+function burst(ox, oy) {
+    const COLS = ['#8b5cf6','#a78bfa','#34d399','#fbbf24','#f87171','#60a5fa','#f472b6','#fb923c'];
+    for (let i = 0; i < 72; i++) {
+        const a = Math.random() * Math.PI * 2;
+        const sp = Math.random() * 9 + 3;
+        particles.push({
+            x: ox, y: oy,
+            vx: Math.cos(a) * sp,
+            vy: Math.sin(a) * sp - 4,
+            r: Math.random() * 6 + 2.5,
+            c: COLS[Math.floor(Math.random() * COLS.length)],
+            rot: Math.random() * 360,
+            rv: (Math.random() - 0.5) * 9,
+            o: 1,
+            rect: Math.random() > 0.45
+        });
+    }
+    if (!rafId) animate();
+}
+
+function animate() {
+    ctx2.clearRect(0, 0, cvs.width, cvs.height);
+    particles = particles.filter(p => p.o > 0.02);
+    particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy; p.vy += 0.18;
+        p.vx *= 0.99; p.rot += p.rv;
+        if (p.y > cvs.height * 0.65) p.o -= 0.03;
+        ctx2.save();
+        ctx2.globalAlpha = p.o;
+        ctx2.fillStyle = p.c;
+        ctx2.translate(p.x, p.y);
+        ctx2.rotate(p.rot * Math.PI / 180);
+        if (p.rect) ctx2.fillRect(-p.r, -p.r * 0.4, p.r * 2, p.r * 0.8);
+        else { ctx2.beginPath(); ctx2.arc(0, 0, p.r, 0, Math.PI*2); ctx2.fill(); }
+        ctx2.restore();
+    });
+    rafId = particles.length ? requestAnimationFrame(animate) : null;
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+
+let toastTimer;
+function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+</script>
+
+</body>
+</html>
